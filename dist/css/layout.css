@@ -11,6 +11,76 @@ body {
   box-sizing: border-box; }
 
 .container {
-  max-width: 1220px;
+  max-width: 1250px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 100%;
   margin: 0 auto; }
+
+ul {
+  margin: 0;
+  padding: 0; }
+
+.mark {
+  color: #FF9737; }
+
+.button {
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none; }
+  .button-lg {
+    padding: 18px 24px;
+    border-radius: 4px; }
+  .button-sm {
+    padding: 10px 22px;
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 2px; }
+  .button.green {
+    background-color: #24FF3A;
+    border: 1px solid #24FF3A;
+    color: #333333;
+    -webkit-transition: background-color .3s ease-out, -webkit-box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, -webkit-box-shadow .3s ease-out;
+    -o-transition: background-color .3s ease-out, box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, box-shadow .3s ease-out, -webkit-box-shadow .3s ease-out; }
+    .button.green:hover {
+      background-color: #8aff96;
+      -webkit-box-shadow: 0 0 0 transparent;
+      box-shadow: 0 0 0 transparent; }
+  .button.orange {
+    background-color: #FF9737;
+    border: 1px solid #FF9737;
+    color: #333333;
+    -webkit-box-shadow: 0 10px 30px rgba(119, 119, 119, 0.3);
+    box-shadow: 0 10px 30px rgba(119, 119, 119, 0.3);
+    -webkit-transition: background-color .3s ease-out, -webkit-box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, -webkit-box-shadow .3s ease-out;
+    -o-transition: background-color .3s ease-out, box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, box-shadow .3s ease-out;
+    transition: background-color .3s ease-out, box-shadow .3s ease-out, -webkit-box-shadow .3s ease-out; }
+    .button.orange:hover {
+      background-color: #ffcc9d;
+      -webkit-box-shadow: 0 0 0 transparent;
+      box-shadow: 0 0 0 transparent; }
+  .button.add-to-cart {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .button.add-to-cart .ico {
+      width: 20px;
+      height: 20px;
+      background-image: url("../ico/shopping-cart.svg");
+      background-size: 100% 100%;
+      margin-left: 16px; }
+
+h2 {
+  font-weight: 900;
+  font-size: 40px; }
+
+h1, h2, h3, h4 {
+  margin: 0; }

@@ -10,9 +10,417 @@
   </head>
   <body>
     <header class="header__wrapper">
-      <div class="container"></div>
+      <div class="container">
+        <div class="header-block"><a class="header-logo" href="index.html"></a>
+          <div class="header-menu">
+            <ul class="header-menu__nav">
+              <li class="header-menu__nav-item"><a href="#">Меню</a></li>
+              <li class="header-menu__nav-item"><a href="#">Акции</a></li>
+              <li class="header-menu__nav-item"><a href="#">Доставка</a></li>
+              <li class="header-menu__nav-item"><a href="#">Контакты</a></li>
+            </ul><a class="header-menu-tel" href="#">
+              <div class="ico"></div><span>+7 (987) 654-32-11</span></a>
+            <div class="header-menu__lk"><a class="log-in" href="#">Войти</a><span class="sep">|</span><a class="reg" href="#">Регистрация</a></div>
+          </div>
+        </div>
+      </div>
     </header>
     <main>
+      <section class="main__wrapper">
+        <div class="container">
+          <div class="main__offer-block">
+            <div class="main__offer-left">
+              <div class="main__offer-item">
+                <div class="item-content">
+                  <div class="sale">Скидка 20%</div>
+                  <div class="info">
+                    <div class="info-main"><span class="name">“Гавайская” пицца</span><span class="wg"> 1 200 г.</span><span class="cost"> 760 ₽</span></div>
+                    <div class="info-consist">
+                      <ul class="consist-list">
+                        <li class="consist-list-item">Курица</li>
+                        <li class="consist-list-item">Грибы</li>
+                        <li class="consist-list-item">Ананас</li>
+                        <li class="consist-list-item">3 сыра</li>
+                        <li class="consist-list-item">Свежая зелень</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="item-button"><a class="button button-lg green add-to-cart" href="#"><span class="text">Добавить в корзину</span>
+                    <div class="ico"></div></a></div>
+              </div>
+              <div class="main__offer-utp">
+                <h1>У нас<span class="mark"> вкусно!</span></h1>
+                <p>Приготовим и доставим до дома блины, роллы, пиццу и многое другое за 30 минут</p><a class="to-bottom" href="#">
+                  <div class="ico"></div><span>Перейти к меню</span></a>
+              </div>
+            </div>
+            <div class="main__offer-right">
+              <div class="main__offer-slider">
+                <div class="slider-element">
+                  <div class="text__block"><span>При заказе доставки от 1 500 рублей<span class="mark"> блины</span> с ананасом и кокосом<span class="mark"> в подарок</span></span></div>
+                </div>
+                <div class="arrows__block">
+                  <div class="arrow arr-left"></div>
+                  <div class="arrow__dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                  </div>
+                  <div class="arrow arr-right"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="menu__wrapper">
+        <div class="container">
+          <div class="menu-block">
+            <div class="menu-block-header">
+              <ul class="menu__list">
+                <li class="menu__list-item">Блины</li>
+                <li class="menu__list-item active">Роллы</li>
+                <li class="menu__list-item">Пицца</li>
+                <li class="menu__list-item">Салаты</li>
+                <li class="menu__list-item">Напитки</li>
+                <li class="menu__list-item">Детское меню</li>
+                <li class="menu__list-item">Другое</li>
+              </ul>
+              <ul class="menu__filters">
+                <li class="menu__filters-item increase active"><span>Цена по возрастанию</span>
+                  <div class="ico">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="0.5" y1="-2.18557e-08" x2="0.500001" y2="16" stroke="#333333"></line>
+                      <line x1="3" y1="0.5" x2="7" y2="0.5" stroke="#333333"></line>
+                      <line x1="3" y1="15.5" x2="17" y2="15.5" stroke="#333333"></line>
+                      <line x1="3" y1="10.5" x2="14" y2="10.5" stroke="#333333"></line>
+                      <line x1="3" y1="5.5" x2="10" y2="5.5" stroke="#333333"></line>
+                    </svg>
+                  </div>
+                </li>
+                <li class="menu__filters-item decrease"><span>Цена по убыванию</span>
+                  <div class="ico">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="0.5" y1="-2.18557e-08" x2="0.500001" y2="16" stroke="#333333"></line>
+                      <line x1="3" y1="0.5" x2="7" y2="0.5" stroke="#333333"></line>
+                      <line x1="3" y1="15.5" x2="17" y2="15.5" stroke="#333333"></line>
+                      <line x1="3" y1="10.5" x2="14" y2="10.5" stroke="#333333"></line>
+                      <line x1="3" y1="5.5" x2="10" y2="5.5" stroke="#333333"></line>
+                    </svg>
+                  </div>
+                </li>
+                <li class="menu__filters-item popularity"><span>По популярности</span>
+                  <div class="ico">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0)">
+                        <path d="M14.2931 5.19365C14.1571 4.96858 13.8876 4.86162 13.6344 4.93227C13.3809 5.00291 13.2057 5.23363 13.2057 5.49669C13.2057 6.21187 12.6239 6.79354 11.9089 6.79354C11.1937 6.79354 10.612 6.21187 10.612 5.49669V0.585946C10.612 0.348977 10.4692 0.135354 10.2503 0.0445637C10.0313 -0.0460736 9.77921 0.00412789 9.61167 0.17167C9.54606 0.237435 7.98341 1.80894 6.40046 4.18352C5.46707 5.58366 4.72214 6.97252 4.18656 8.31148C3.50815 10.0077 3.16406 11.6316 3.16406 13.138C3.16406 16.9217 6.24237 20 10.0259 20C13.8097 20 16.888 16.9217 16.888 13.138C16.888 10.7161 16.0149 8.04323 14.2931 5.19365ZM10.0259 18.8282C6.88859 18.8282 4.33594 16.2755 4.33594 13.138C4.33594 10.0496 5.98191 6.92781 7.36283 4.85261C8.11127 3.72789 8.86552 2.78001 9.44001 2.10588V5.49669C9.44001 6.85793 10.5475 7.96541 11.9087 7.96541C12.7409 7.96541 13.4784 7.55159 13.9258 6.91881C15.1145 9.15713 15.7161 11.2448 15.7161 13.138C15.7161 16.2755 13.1636 18.8282 10.0259 18.8282Z" fill="#333333"></path>
+                        <path d="M13.3499 9.8894H10.8395C10.5159 9.8894 10.2536 10.1517 10.2536 10.4752C10.2534 10.7988 10.5159 11.0613 10.8394 11.0613H11.9354L9.43206 13.5645L8.07128 12.2037C7.84255 11.975 7.47146 11.975 7.24273 12.2037L5.91124 13.535C5.68236 13.7639 5.68236 14.1349 5.91109 14.3637C6.13997 14.5926 6.51092 14.5925 6.7398 14.3637L7.657 13.4467L9.01763 14.8075C9.1275 14.9173 9.27658 14.9791 9.43206 14.9791C9.5874 14.9791 9.73648 14.9173 9.84634 14.8075L12.764 11.89V12.9857C12.764 13.3092 13.0263 13.5717 13.3499 13.5717C13.6736 13.5717 13.9359 13.3092 13.9359 12.9857V10.4753C13.9359 10.1517 13.6736 9.8894 13.3499 9.8894Z" fill="#333333"></path>
+                      </g>
+                    </svg>
+                    <defs>
+                      <clipPath id="clip0">
+                        <rect width="20" height="20" fill="white"></rect>
+                      </clipPath>
+                    </defs>
+                  </div>
+                </li>
+                <li class="menu__filters-item set"><span>Сеты</span>
+                  <div class="ico">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.66667 17.3333H12.8487L13.3847 19.0927C13.5241 19.538 13.8938 19.8727 14.3507 19.9673C14.8076 20.0619 15.2799 19.9015 15.5846 19.5481C15.8894 19.1948 15.9787 18.7041 15.818 18.266L15.322 16.9327C15.9539 16.6158 16.4793 16.1209 16.8333 15.509L17.5487 17.0553C17.7474 17.4779 18.1597 17.7594 18.6256 17.7907C19.0916 17.822 19.5378 17.5982 19.7913 17.206C20.0448 16.8138 20.0656 16.315 19.8457 15.903L17.3333 11.236V3.66667C17.3309 1.64261 15.6907 0.00238783 13.6667 0H3.66667C1.64261 0.00238783 0.00238783 1.64261 0 3.66667V13.6667C0.00238783 15.6907 1.64261 17.3309 3.66667 17.3333ZM15.3333 7.52133L12.7757 2.77133C12.5634 2.37192 12.0713 2.21474 11.6668 2.41716C11.2624 2.61958 11.0932 3.10769 11.2857 3.517L15.3333 12.2667V13.6667C15.3332 14.2128 15.0643 14.7239 14.6143 15.0333L10.6143 4.28867C10.4604 3.86192 9.99347 3.63667 9.56369 3.78187C9.13391 3.92706 8.89923 4.38936 9.03567 4.822L12.239 15.3333H3.66667C2.74665 15.3322 2.0011 14.5867 2 13.6667V3.66667C2.0011 2.74665 2.74665 2.0011 3.66667 2H13.6667C14.5867 2.0011 15.3322 2.74665 15.3333 3.66667V7.52133ZM14.829 19.2943C14.6748 19.3517 14.5042 19.3453 14.3548 19.2765C14.2054 19.2077 14.0896 19.0821 14.033 18.9277L9.674 4.62767C9.64436 4.54041 9.69107 4.44564 9.77833 4.416C9.86559 4.38636 9.96036 4.43307 9.99 4.52033L14.1287 15.64L15.1927 18.5C15.3114 18.8198 15.1487 19.1753 14.829 19.2943ZM15.0883 16.307L14.855 15.6737C15.5545 15.2606 15.9876 14.5123 15.9973 13.7L16.469 14.7193C16.2184 15.3996 15.7272 15.9645 15.0883 16.307ZM19.0073 17.057C18.8629 17.1349 18.6934 17.1522 18.5363 17.105C18.3791 17.0578 18.2472 16.9499 18.1697 16.8053L11.8903 3.23667C11.8494 3.15382 11.8833 3.05346 11.9662 3.0125C12.049 2.97154 12.1494 3.00549 12.1903 3.08833L19.259 16.219C19.3371 16.3634 19.3545 16.533 19.3073 16.6903C19.26 16.8475 19.1521 16.9795 19.0073 17.057ZM0.666667 3.66667C0.668504 2.01057 2.01057 0.668504 3.66667 0.666667H13.6667C15.3228 0.668504 16.6648 2.01057 16.6667 3.66667V9.99767L16 8.75967V3.66667C15.9985 2.37861 14.9547 1.3348 13.6667 1.33333H3.66667C2.37861 1.3348 1.3348 2.37861 1.33333 3.66667V13.6667C1.3348 14.9547 2.37861 15.9985 3.66667 16H12.4423L12.6453 16.6667H3.66667C2.01057 16.6648 0.668504 15.3228 0.666667 13.6667V3.66667Z" fill="#333333"></path>
+                      <path d="M5.66667 2.33331C4.19633 2.33331 3 3.23031 3 4.33331V6.33331C3 7.43631 4.19633 8.33331 5.66667 8.33331C7.137 8.33331 8.33333 7.43631 8.33333 6.33331V4.33331C8.33333 3.23031 7.137 2.33331 5.66667 2.33331ZM5.66667 2.99998C6.75067 2.99998 7.66667 3.61065 7.66667 4.33331C7.66667 5.05598 6.75067 5.66665 5.66667 5.66665C4.58267 5.66665 3.66667 5.05598 3.66667 4.33331C3.66667 3.61065 4.58267 2.99998 5.66667 2.99998ZM5.66667 7.66665C4.58267 7.66665 3.66667 7.05598 3.66667 6.33331V5.65165C4.2328 6.10632 4.9407 6.3476 5.66667 6.33331C6.39263 6.3476 7.10054 6.10632 7.66667 5.65165V6.33331C7.66667 7.05598 6.75067 7.66665 5.66667 7.66665Z" fill="#333333"></path>
+                      <path d="M5.33333 4.33329H6C6.18409 4.33329 6.33333 4.18405 6.33333 3.99996C6.33333 3.81586 6.18409 3.66663 6 3.66663H5.33333C5.14924 3.66663 5 3.81586 5 3.99996C5 4.18405 5.14924 4.33329 5.33333 4.33329Z" fill="#333333"></path>
+                      <path d="M5.66667 9C4.19633 9 3 9.897 3 11V13C3 14.103 4.19633 15 5.66667 15C7.137 15 8.33333 14.103 8.33333 13V11C8.33333 9.897 7.137 9 5.66667 9ZM5.66667 9.66667C6.75067 9.66667 7.66667 10.2773 7.66667 11C7.66667 11.7227 6.75067 12.3333 5.66667 12.3333C4.58267 12.3333 3.66667 11.7227 3.66667 11C3.66667 10.2773 4.58267 9.66667 5.66667 9.66667ZM5.66667 14.3333C4.58267 14.3333 3.66667 13.7227 3.66667 13V12.3183C4.2328 12.773 4.9407 13.0143 5.66667 13C6.39263 13.0143 7.10054 12.773 7.66667 12.3183V13C7.66667 13.7227 6.75067 14.3333 5.66667 14.3333Z" fill="#333333"></path>
+                      <path d="M5.33333 11H6C6.18409 11 6.33333 10.8507 6.33333 10.6666C6.33333 10.4826 6.18409 10.3333 6 10.3333H5.33333C5.14924 10.3333 5 10.4826 5 10.6666C5 10.8507 5.14924 11 5.33333 11Z" fill="#333333"></path>
+                    </svg>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="menu-block-content">
+              <div class="menu-item" style="background-image: url(&quot;img/roll-1.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Cпайси с лососем</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Нори</li>
+                      <li class="consist-item">Рис</li>
+                      <li class="consist-item">Соус Спайси</li>
+                      <li class="consist-item">Лосось</li>
+                      <li class="consist-item">Укроп</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">190 г.</div>
+                      <div class="price">119 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-2.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Фета</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Лосось</li>
+                      <li class="consist-item">Авокадо</li>
+                      <li class="consist-item">Огурец</li>
+                      <li class="consist-item">Сыр</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">230 г.</div>
+                      <div class="price">180 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-3.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Таманеги с копченым лососем</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Нори</li>
+                      <li class="consist-item">Рис</li>
+                      <li class="consist-item">Копченый лосось</li>
+                      <li class="consist-item">Такун</li>
+                      <li class="consist-item">Сыр сливочный</li>
+                      <li class="consist-item">Лук фри</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">230 г.</div>
+                      <div class="price">269 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-4.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Калифорния с лососем</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Нори</li>
+                      <li class="consist-item">Рис</li>
+                      <li class="consist-item">Охлажденный лосось</li>
+                      <li class="consist-item">Сыр сливочный</li>
+                      <li class="consist-item">Огурец</li>
+                      <li class="consist-item">Тобика оранджевая</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">220 г.</div>
+                      <div class="price">279 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-5.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Аляска</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Нори</li>
+                      <li class="consist-item">Рис</li>
+                      <li class="consist-item">Копченый лосось</li>
+                      <li class="consist-item">Сыр сливочный</li>
+                      <li class="consist-item">Лук зеленый</li>
+                      <li class="consist-item">Лимон</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">220 г.</div>
+                      <div class="price">280 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-6.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Сет Вегетарианский</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Ролл Фето</li>
+                      <li class="consist-item">Ролл Вегетарианский</li>
+                      <li class="consist-item">Ролл с чукой и огурцом</li>
+                      <li class="consist-item">Ролл овощной</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">955 г.</div>
+                      <div class="price">599 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-7.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Сет Филодельфия</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Филадельфия классическая</li>
+                      <li class="consist-item">Филадельфия Лайт</li>
+                      <li class="consist-item">Филадельфия Делюкс</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">860 г.</div>
+                      <div class="price">1099 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item" style="background-image: url(&quot;img/roll-8.jpg&quot;)">
+                <div class="menu-item__info">
+                  <div class="name">Маки сет</div>
+                  <div class="hidden_info">
+                    <ul class="consist">
+                      <li class="consist-item">Мак с мидией</li>
+                      <li class="consist-item">Мак с огурцом</li>
+                      <li class="consist-item">Мак с креветкой</li>
+                      <li class="consist-item">Мак с омлетом</li>
+                      <li class="consist-item">Мак с угрем</li>
+                      <li class="consist-item">Мак с копченым лососем</li>
+                      <li class="consist-item">Мак с лососем</li>
+                      <li class="consist-item">Мак с сыром и икрой</li>
+                      <li class="consist-item">Мак с чукой</li>
+                      <li class="consist-item">Мак с мидией</li>
+                      <li class="consist-item">Мак с копченой курицей</li>
+                    </ul>
+                    <div class="rate">
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star active"></div>
+                      <div class="star"></div>
+                    </div>
+                  </div>
+                  <div class="buy-inf">
+                    <div class="about">
+                      <div class="w">1120 г.</div>
+                      <div class="price">999 ₽</div>
+                    </div>
+                    <div class="button green button-sm">Заказать</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="steps__wrapper">
+        <div class="container">
+          <div class="steps-block">
+            <h2 class="title">Как мы работаем?</h2>
+            <div class="steps__list">
+              <div class="step step-1">
+                <div class="ico-block">
+                  <div class="ico"></div>
+                </div>
+                <div class="text">
+                  <h3 class="step-title">Закажите и оплатите</h3>
+                  <p class="step-text">На этом этапе выберите то, что хотели бы покушать</p>
+                </div>
+              </div>
+              <div class="step step-2">
+                <div class="ico-block">
+                  <div class="ico"></div>
+                </div>
+                <div class="text">
+                  <h3 class="step-title">Наш повар начинает готовить</h3>
+                  <p class="step-text">Мы готовим еду только когда вы закажете, а не разогреваем старую</p>
+                </div>
+              </div>
+              <div class="step step-3">
+                <div class="ico-block">
+                  <div class="ico"></div>
+                </div>
+                <div class="text">
+                  <h3 class="step-title">После приготовления курьер уже спешит доставить еду до вашего дома</h3>
+                  <p class="step-text">Наш курьер доставит ваш заказ  на столько быстро, на сколько это возможно</p>
+                </div>
+              </div>
+              <div class="step step-4">
+                <div class="ico-block">
+                  <div class="ico"></div>
+                </div>
+                <div class="text">
+                  <h3 class="step-title">Получение заказа</h3>
+                  <p class="step-text">Получите заказ и скорее за стол!</p>
+                </div>
+              </div>
+            </div>
+            <div class="steps__button-wrap">
+              <div class="button button-lg orange">Сделать заказ</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script src="js/index.js"></script>
   </body>

@@ -1,4 +1,4 @@
-@import '_var';
+@import '_variable';
 
 html, body {
     margin: 0;
@@ -15,7 +15,82 @@ body {
 }
 
 .container {
-    max-width: 1220px;
+    max-width: 1250px;
+    padding-left: 15px;
+    padding-right: 15px;
     width: 100%;
     margin: 0 auto;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.mark {
+    color: $c-orange;
+}
+
+.button {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+
+    &-lg {
+        padding: 18px 24px;
+        border-radius: 4px;
+    }
+
+    &-sm {
+        padding: 10px 22px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        border-radius: 2px;
+    }
+
+    &.green {
+        background-color: $c-green;
+        border: 1px solid $c-green;
+        color: $c-black;
+        transition: background-color .3s ease-out, box-shadow .3s ease-out;
+
+        &:hover {
+            background-color: $c-green-light;
+            box-shadow: 0 0 0 transparent;
+        }
+    }
+
+    &.orange {
+        background-color: $c-orange;
+        border: 1px solid $c-orange;
+        color: $c-black;
+        box-shadow: 0 10px 30px rgba(119, 119, 119, 0.3);
+        transition: background-color .3s ease-out, box-shadow .3s ease-out;
+
+        &:hover {
+            background-color: $c-orange-light;
+            box-shadow: 0 0 0 transparent;
+        }
+    }
+
+    &.add-to-cart {
+        display: inline-flex;
+        align-items: center;
+
+        .ico {
+            width: 20px;
+            height: 20px;
+            background-image: url('../ico/shopping-cart.svg');
+            background-size: 100% 100%;
+            margin-left: 16px;
+        }
+    }
+}
+
+h2 {
+    font-weight: 900;
+    font-size: $font-ul;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
 }

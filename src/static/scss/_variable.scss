@@ -5,10 +5,15 @@ $font-xs: 14px;
 $font-sm: 16px;
 $font-md: 20px;
 $font-lg: 30px;
+$font-ul: 40px;
 $font-xl: 50px;
 
 $c-orange: #FF9737;
+$c-orange-dark: darken($c-orange, 20);
+$c-orange-light: lighten($c-orange, 20);
 $c-green: #24FF3A;
+$c-green-dark: darken($c-green, 20);
+$c-green-light: lighten($c-green, 20);
 $c-black: #333333;
 $c-red: #F24141;
 $c-gray: #EBEBEB;
