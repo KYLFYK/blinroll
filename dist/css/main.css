@@ -80,7 +80,8 @@ ul {
 
 h2 {
   font-weight: 900;
-  font-size: 40px; }
+  font-size: 40px;
+  font-family: "Exo 2", sans-serif; }
 
 h1, h2, h3, h4 {
   margin: 0; }
@@ -366,6 +367,8 @@ h1, h2, h3, h4 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     gap: 10px;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -672,3 +675,18 @@ h1, h2, h3, h4 {
     font-family: "Exo 2", sans-serif;
     color: white;
     letter-spacing: 0.06em; }
+
+.sale__wrapper {
+  margin-bottom: 120px; }
+
+.sale-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }

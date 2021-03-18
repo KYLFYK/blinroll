@@ -297,6 +297,7 @@
             .menu__list {
                 list-style: none;
                 display: flex;
+                flex-wrap: wrap;
                 gap: 10px;
                 padding-top: 16px;
                 padding-bottom: 16px;
@@ -681,5 +682,17 @@
                 letter-spacing: 0.06em;
             }
         }
+    }
+}
+
+.sale {
+    &__wrapper {
+        margin-bottom: 120px;
+    }
+
+    &-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
