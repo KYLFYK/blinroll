@@ -1,6 +1,12 @@
 let catsList = []
 let currentItems = []
 
+let cartInfo = {
+    items: [],
+    cost: 0,
+    weight: 0
+}
+
 const menuBlock = document.querySelector('.menu__wrapper .menu-block-header ul.menu__list')
 const itemsBlock = document.querySelector('section.menu__wrapper .menu-block-content')
 
@@ -55,11 +61,11 @@ const parseItems = (increase) => {
             compItem += `<li class="consist-item">${compose}</li>`
         })
 
-        let satrRate = getRandomInt(4, 6)
+        let starRate = getRandomInt(4, 6)
 
-        let newItem = ``
+        let newItem
 
-        if (satrRate === 4) {
+        if (starRate === 4) {
             newItem = `
             <div class="menu-item" data-order-id="${item.id}" style="background-image: url(${item.image})">
                 <div class="menu-item__info">
@@ -116,6 +122,14 @@ const parseItems = (increase) => {
         }
 
         itemsBlock.innerHTML += newItem
+    })
+
+    itemsBlock.querySelectorAll('.menu-item').forEach(item => {
+        let thisOrdId = item.getAttribute('data-order-id')
+
+        item.querySelector('.button.green.button-sm').addEventListener('click', () => {
+            addToCart(thisOrdId)
+        })
     })
 }
 
@@ -205,3 +219,352 @@ document.querySelectorAll('.menu-block-header  ul.menu__filters li.menu__filters
         }
     })
 })
+
+// Cart logic
+
+const cartItemsBlock = document.querySelector('.cart__wrapper .cart-block__items')
+const countOfOrds = document.querySelector('.cart__wrapper .cart__open .count-of-ord')
+
+const allWeight = document.querySelector('.cart__wrapper .cart-block__items-cost .weight span.value')
+const allPrice = document.querySelector('.cart__wrapper .cart-block__items-cost .price span.value')
+
+const priceWeightBlock = document.querySelector('.cart__wrapper .cart-block__items-cost')
+const acceptButton = document.querySelector('.cart__wrapper a.cart-accept')
+const clearButton = document.querySelector('.cart__wrapper a.cart-clean')
+const cartEmpty = document.querySelector('.cart__wrapper .cart-block__empty')
+
+checkCostWeight()
+
+function addToCart (idOfC) {
+    let finded = false
+
+    currentItems.forEach(cartItem => {
+        if (Number(cartItem.id) === Number(idOfC)) {
+            document.querySelector('.cart__wrapper .cart__added-to-ct').classList.add('opened')
+
+            setTimeout(() => {
+                document.querySelector('.cart__wrapper .cart__added-to-ct').classList.remove('opened')
+            }, 6000)
+
+            let haveItem = false
+
+            cartInfo.items.forEach(item => {
+                if (Number(item.id) === Number(idOfC)) {
+                    haveItem = true
+
+                    item.amount ++
+
+                    document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(cartElem => {
+                        if (Number(cartElem.getAttribute('data-cart-id')) === Number(idOfC)) {
+                            if (cartElem.querySelector('.count').classList.contains('closed')) {
+                                cartElem.querySelector('.count').classList.remove('closed')
+                            }
+
+                            let thisCount = Number(cartElem.querySelector('.count').textContent) + 1
+
+                            cartElem.querySelector('.count').textContent = thisCount.toString()
+                        }
+                    })
+                }
+            })
+
+            if (!haveItem) {
+                let cartObj = new Object({
+                    id: cartItem.id,
+                    name: cartItem.name,
+                    amount: 1,
+                    weight: cartItem.weight,
+                    cost: cartItem.cost,
+                    image: cartItem.image
+                })
+
+                cartInfo.items.push(cartObj)
+
+                let newCartBlock = `
+                <div class="cart-block__items-elem" data-cart-id="${cartItem.id}">
+                    <div class="elem-img" style="background-image: url('${cartItem.image}')">
+                      <div class="count closed">1</div>
+                    </div>
+                    <div class="elem-info">
+                      <div class="name">${cartItem.name}</div>
+                      <div class="weight">${cartItem.weight} г.</div>
+                    </div>
+                    <div class="elem-cost"><span class="value">${cartItem.cost}</span><span class="rub"> ₽</span></div>
+                    <div class="elem-inc__block">
+                      <div class="elem-inc-arr increase"></div>
+                      <div class="elem-inc-arr decrease"></div>
+                    </div>
+                    <div class="elem-delete"></div>
+                </div>
+            `
+
+                cartItemsBlock.innerHTML += newCartBlock
+                cartItemsBlock.scrollTop = document.querySelector('.cart__wrapper .cart-block__items').scrollHeight
+            }
+
+            let countOfCart = calcCartLength()
+
+            countOfOrds.textContent = countOfCart.toString()
+
+            if (countOfCart < 1) {
+                countOfOrds.classList.add('closed')
+            } else {
+                countOfOrds.classList.remove('closed')
+            }
+
+            if (cartInfo.items.length) {
+                countOfOrds.classList.remove('closed')
+            } else {
+                countOfOrds.classList.add('closed')
+            }
+
+            cartInfo.cost += cartItem.cost
+            cartInfo.weight += cartItem.weight
+
+            allWeight.textContent = cartInfo.weight
+            allPrice.textContent = cartInfo.cost
+
+            checkCostWeight()
+
+            finded = true
+        }
+    })
+
+    if (!finded) {
+        cartInfo.items.forEach(cartItem => {
+            if (Number(cartItem.id) === Number(idOfC)) {
+                document.querySelector('.cart__wrapper .cart__added-to-ct').classList.add('opened')
+
+                setTimeout(() => {
+                    document.querySelector('.cart__wrapper .cart__added-to-ct').classList.remove('opened')
+                }, 6000)
+
+                cartInfo.items.forEach(item => {
+                    if (Number(item.id) === Number(idOfC)) {
+
+                        item.amount ++
+
+                        document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(cartElem => {
+                            if (Number(cartElem.getAttribute('data-cart-id')) === Number(idOfC)) {
+                                if (cartElem.querySelector('.count').classList.contains('closed')) {
+                                    cartElem.querySelector('.count').classList.remove('closed')
+                                }
+
+                                let thisCount = Number(cartElem.querySelector('.count').textContent) + 1
+
+                                cartElem.querySelector('.count').textContent = thisCount.toString()
+                            }
+                        })
+                    }
+                })
+
+                let countOfCart = calcCartLength()
+
+                countOfOrds.textContent = countOfCart.toString()
+
+                if (countOfCart < 1) {
+                    countOfOrds.classList.add('closed')
+                } else {
+                    countOfOrds.classList.remove('closed')
+                }
+
+                if (cartInfo.items.length) {
+                    countOfOrds.classList.remove('closed')
+                } else {
+                    countOfOrds.classList.add('closed')
+                }
+
+                cartInfo.cost += cartItem.cost
+                cartInfo.weight += cartItem.weight
+
+                allWeight.textContent = cartInfo.weight
+                allPrice.textContent = cartInfo.cost
+
+                checkCostWeight()
+            }
+        })
+    }
+}
+
+function removeFromCt (idOfC) {
+    cartInfo.items.forEach((cartItem) => {
+        if (Number(cartItem.id) === Number(idOfC)) {
+            cartInfo.cost -= (cartItem.cost * cartItem.amount)
+            cartInfo.weight -= (cartItem.weight * cartItem.amount)
+
+            allWeight.textContent = cartInfo.weight
+            allPrice.textContent = cartInfo.cost
+
+            cartInfo.items.forEach((item, index) => {
+                if (Number(item.id) === Number(idOfC)) {
+                    cartInfo.items.splice(index, 1)
+                }
+            })
+
+            let countOfCart = calcCartLength()
+
+            countOfOrds.textContent = countOfCart.toString()
+
+            if (countOfCart < 1) {
+                countOfOrds.classList.add('closed')
+            } else {
+                countOfOrds.classList.remove('closed')
+            }
+
+            checkCostWeight()
+        }
+    })
+
+
+}
+
+function checkCostWeight () {
+    if (cartInfo.cost === 0) {
+        priceWeightBlock.classList.add('closed')
+        acceptButton.classList.add('closed')
+        clearButton.classList.add('closed')
+
+        cartEmpty.classList.remove('closed')
+    } else {
+        priceWeightBlock.classList.remove('closed')
+        acceptButton.classList.remove('closed')
+        clearButton.classList.remove('closed')
+
+        cartEmpty.classList.add('closed')
+    }
+}
+
+function deleteAllCart () {
+    cartInfo = {
+        items: [],
+        cost: 0,
+        weight: 0
+    }
+
+    document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(item => item.remove())
+
+    let countOfCart = calcCartLength()
+
+    countOfOrds.textContent = countOfCart.toString()
+
+    if (countOfCart < 1) {
+        countOfOrds.classList.add('closed')
+    } else {
+        countOfOrds.classList.remove('closed')
+    }
+
+    checkCostWeight()
+}
+
+function calcCartLength () {
+    let count = 0
+
+    cartInfo.items.forEach(item => {
+        count += Number(item.amount)
+    })
+
+    return count
+}
+
+document.querySelector('.cart-block__items').addEventListener('click', (e) => {
+    let target = e.target
+
+    if (target.className === 'elem-delete') {
+        let thisId = target.parentElement.getAttribute('data-cart-id')
+
+        target.parentElement.remove()
+
+        removeFromCt(thisId)
+    }
+
+    if (target.className === 'elem-inc-arr increase') {
+        let elem = target.parentElement.parentElement
+        let elemId = elem.getAttribute('data-cart-id')
+
+        addToCart(elemId)
+    }
+
+    if (target.className === 'elem-inc-arr decrease') {
+        let elem = target.parentElement.parentElement
+        let elemId = Number(elem.getAttribute('data-cart-id'))
+
+        let elemCost = Number(elem.querySelector('.elem-cost .value').textContent)
+        let elemWeight = Number(elem.querySelector('.elem-info .weight').textContent.replace(/[^\d]/g, ''))
+
+        let countOfThis = Number(elem.querySelector('.count').textContent)
+
+        if (countOfThis === 1) {
+            removeFromCt(elemId)
+
+            elem.remove()
+        } else if (countOfThis === 2) {
+            elem.querySelector('.count').textContent = (countOfThis - 1).toString()
+            elem.querySelector('.count').classList.add('closed')
+
+            cartInfo.items.forEach((cartItem) => {
+                if (Number(cartItem.id) === Number(elemId)) {
+                    cartItem.amount --
+                }
+            })
+
+            cartInfo.weight -= elemWeight
+            cartInfo.cost -= elemCost
+
+            allWeight.textContent = cartInfo.weight
+            allPrice.textContent = cartInfo.cost
+        } else {
+            elem.querySelector('.count').textContent = (countOfThis - 1).toString()
+
+            cartInfo.items.forEach((cartItem) => {
+                if (Number(cartItem.id) === Number(elemId)) {
+                    cartItem.amount --
+                }
+            })
+
+            cartInfo.weight -= elemWeight
+            cartInfo.cost -= elemCost
+
+            allWeight.textContent = cartInfo.weight
+            allPrice.textContent = cartInfo.cost
+        }
+
+        let countOfCart = calcCartLength()
+
+        countOfOrds.textContent = countOfCart.toString()
+
+        if (countOfCart < 1) {
+            countOfOrds.classList.add('closed')
+        } else {
+            countOfOrds.classList.remove('closed')
+        }
+
+        if (cartInfo.items.length) {
+            countOfOrds.classList.remove('closed')
+        } else {
+            countOfOrds.classList.add('closed')
+        }
+    }
+})
+
+document.querySelector('.cart__wrapper .cart__open').addEventListener('click', () => {
+    document.querySelector('.cart__wrapper .cart-block').classList.toggle('closed')
+})
+
+document.querySelector('.cart__wrapper .cart-block .cart-block-close').addEventListener('click', () => {
+    document.querySelector('.cart__wrapper .cart-block').classList.add('closed')
+})
+
+document.querySelector('.cart__wrapper .cart-block a.cart-continue').addEventListener('click', (e) => {
+    if (document.querySelector('.menu-block-content')) {
+        e.preventDefault()
+        document.querySelector('.cart__wrapper .cart-block').classList.add('closed')
+    }
+})
+
+clearButton.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    deleteAllCart()
+})
+
+// --> Cart logic

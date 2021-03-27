@@ -21,3 +21,10 @@ prevButton.addEventListener('click', function (event) {
 })
 
 glide.mount()
+
+if (document.querySelector('.header-burger')) {
+    document.querySelector('.header-burger').addEventListener('click', () => {
+        document.querySelector('.header-burger').classList.toggle('active')
+        document.querySelector('.mobile__header').classList.toggle('closed')
+    })
+}

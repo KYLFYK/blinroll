@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
     <meta charset="utf-8">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&amp;family=Montserrat:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="icon" sizes="256x256" href="favicon.ico">
+    <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/main.css">
     <title>Blin Roll</title>
-    <link rel="icon" sizes="256x256" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&amp;family=Montserrat:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
   </head>
   <body>
     <header class="header__wrapper">
@@ -17,14 +21,55 @@
               <li class="header-menu__nav-item"><a href="/#menu" data-dist="menu">Меню</a></li>
               <li class="header-menu__nav-item"><a href="/#sale" data-dist="sale">Акции</a></li>
               <li class="header-menu__nav-item"><a href="/#dist" data-dist="dist">Доставка</a></li>
-              <li class="header-menu__nav-item"><a href="#">Контакты</a></li>
-            </ul><a class="header-menu-tel" href="#">
-              <div class="ico"></div><span>+7 (987) 654-32-11</span></a>
+              <li class="header-menu__nav-item"><a href="#footer">Контакты</a></li>
+            </ul><a class="header-menu-tel" href="tel:+79786633030">
+              <div class="ico"></div><span>+7 (978) 663-30-30</span></a>
             <div class="header-menu__lk"><a class="log-in" href="#">Войти</a><span class="sep">|</span><a class="reg" href="#">Регистрация</a></div>
+          </div>
+          <div class="header-burger">
+            <div class="span-block"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mobile__header closed">
+        <div class="container">
+          <div class="mobile__header-block">
+            <div class="mobile__header-nav">
+              <ul class="mobile__header-menu">
+                <li class="mobile__header-menu-item"><a href="/#menu" data-dist="menu">Меню</a></li>
+                <li class="mobile__header-menu-item"><a href="/#sale" data-dist="sale">Акции</a></li>
+                <li class="mobile__header-menu-item"><a href="/#dist" data-dist="dist">Доставка</a></li>
+                <li class="mobile__header-menu-item"><a href="#footer">Контакты</a></li>
+              </ul>
+              <div class="mobile__header-log-in"><a class="mobile__header-log-in-item" href="#">Войти</a><span class="sep">|</span><a class="mobile__header-log-in-item" href="#">Регистрация</a></div>
+            </div>
+            <div class="mobile__header-num"><a class="mobile__header-num-link" href="tel:+79786633030">
+                <div class="ico"></div><span>+7 (978) 663-30-30</span></a></div>
           </div>
         </div>
       </div>
     </header>
+    <div class="cart__wrapper">
+      <div class="cart__added-to-ct">
+        <div class="cart__added-to-ct-cont"><span>Товар добавлен в корзину</span>
+          <div class="ico"></div>
+        </div>
+      </div>
+      <div class="cart-block">
+        <div class="cart-block-close"></div>
+        <div class="cart-block__items"></div>
+        <div class="cart-block__empty">Ваша корзина пуста</div>
+        <div class="cart-block__items-cost">
+          <div class="weight"><span class="value">0</span><span class="gr"> г.</span></div>
+          <div class="price"><span class="value">0</span><span class="rub"> ₽</span></div>
+        </div>
+        <div class="cart-block__items-btns"><a class="cart-accept" href="#">Перейти к оформлению заказа</a><a class="cart-continue" href="/">Продолжить покупки</a><a class="cart-clean closed" href="#">Очистить корзину</a></div>
+      </div>
+      <div class="cart__open">
+        <div class="ico"></div>
+        <div class="count-of-ord closed">0</div>
+      </div>
+    </div>
     <main>
       <section class="main__wrapper">
         <div class="container">
@@ -114,16 +159,6 @@
                     </svg>
                   </div>
                 </li>
-                <!--li.menu__filters-item.popularity-->
-                <!--    span По популярности-->
-                <!--    .ico-->
-                <!--        svg(width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg")-->
-                <!--            g(clip-path="url(#clip0)")-->
-                <!--                path(d="M14.2931 5.19365C14.1571 4.96858 13.8876 4.86162 13.6344 4.93227C13.3809 5.00291 13.2057 5.23363 13.2057 5.49669C13.2057 6.21187 12.6239 6.79354 11.9089 6.79354C11.1937 6.79354 10.612 6.21187 10.612 5.49669V0.585946C10.612 0.348977 10.4692 0.135354 10.2503 0.0445637C10.0313 -0.0460736 9.77921 0.00412789 9.61167 0.17167C9.54606 0.237435 7.98341 1.80894 6.40046 4.18352C5.46707 5.58366 4.72214 6.97252 4.18656 8.31148C3.50815 10.0077 3.16406 11.6316 3.16406 13.138C3.16406 16.9217 6.24237 20 10.0259 20C13.8097 20 16.888 16.9217 16.888 13.138C16.888 10.7161 16.0149 8.04323 14.2931 5.19365ZM10.0259 18.8282C6.88859 18.8282 4.33594 16.2755 4.33594 13.138C4.33594 10.0496 5.98191 6.92781 7.36283 4.85261C8.11127 3.72789 8.86552 2.78001 9.44001 2.10588V5.49669C9.44001 6.85793 10.5475 7.96541 11.9087 7.96541C12.7409 7.96541 13.4784 7.55159 13.9258 6.91881C15.1145 9.15713 15.7161 11.2448 15.7161 13.138C15.7161 16.2755 13.1636 18.8282 10.0259 18.8282Z" fill="#333333")-->
-                <!--                path(d="M13.3499 9.8894H10.8395C10.5159 9.8894 10.2536 10.1517 10.2536 10.4752C10.2534 10.7988 10.5159 11.0613 10.8394 11.0613H11.9354L9.43206 13.5645L8.07128 12.2037C7.84255 11.975 7.47146 11.975 7.24273 12.2037L5.91124 13.535C5.68236 13.7639 5.68236 14.1349 5.91109 14.3637C6.13997 14.5926 6.51092 14.5925 6.7398 14.3637L7.657 13.4467L9.01763 14.8075C9.1275 14.9173 9.27658 14.9791 9.43206 14.9791C9.5874 14.9791 9.73648 14.9173 9.84634 14.8075L12.764 11.89V12.9857C12.764 13.3092 13.0263 13.5717 13.3499 13.5717C13.6736 13.5717 13.9359 13.3092 13.9359 12.9857V10.4753C13.9359 10.1517 13.6736 9.8894 13.3499 9.8894Z" fill="#333333")-->
-                <!--        defs-->
-                <!--            clipPath(id="clip0")-->
-                <!--                rect(width="20" height="20" fill="white")-->
               </ul>
             </div>
             <div class="menu-block-content"></div>
@@ -188,6 +223,29 @@
         </div>
       </section>
     </main>
+    <footer class="footer__wrapper" id="footer">
+      <div class="container">
+        <div class="footer-block"><a class="footer-logo" href="/">
+            <div class="logo"></div></a>
+          <div class="footer-content">
+            <ul class="footer-menu">
+              <li class="footer-menu-item"><a href="/#menu">Меню</a></li>
+              <li class="footer-menu-item"><a href="/#sale">Акции</a></li>
+              <li class="footer-menu-item"><a href="/#dist">Доставка</a></li>
+            </ul>
+            <ul class="footer-social">
+              <li class="footer-social-item"><a href="https://www.instagram.com/p/CMmfCLCLiJr/?igshid=f48s0whmtm53">
+                  <div class="ico instagram"></div></a></li>
+              <li class="footer-social-item"><a href="https://vk.com/blin_roll">
+                  <div class="ico vk"></div></a></li>
+            </ul>
+            <div class="footer-number"><a href="tel:+79786633030">
+                <div class="ico"></div><span>+7 (978) 663-30-30</span></a></div>
+            <div class="footer-log-in"><a class="log-in" href="#">Войти</a><span class="sep">|</span><a class="reg" href="#">Регистрация</a></div>
+          </div>
+        </div>
+      </div>
+    </footer>
     <script src="js/parse.js"></script>
     <script src="js/glide.min.js"></script>
     <script src="js/index.js"></script>

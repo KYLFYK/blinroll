@@ -5,7 +5,6 @@ const styles = require('./style')
 const script = require('./script')
 const imgMin = require('./imgMin')
 const ico = require('./ico')
-const audio = require('./audio')
 
 const server = require('browser-sync').create()
 
@@ -24,7 +23,6 @@ module.exports = function serve(cb) {
     gulp.watch('src/static/ico/**.*', gulp.series(ico)).on('change', server.reload)
     gulp.watch('dist/*.html').on('change', server.reload)
     gulp.watch('dist/js/*.js').on('change', server.reload)
-    gulp.watch('src/static/audio/**.*', gulp.series(audio)).on('change', server.reload)
 
     return cb()
 }

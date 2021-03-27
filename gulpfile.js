@@ -6,6 +6,5 @@ const script = require('./tasks/script')
 const imgMin = require('./tasks/imgMin')
 const serve = require('./tasks/serve')
 const ico = require('./tasks/ico')
-const audio = require('./tasks/audio')
 
-module.exports.default = gulp.parallel(pugToHtml, styles, script, imgMin, ico, serve, audio)
+module.exports.default = gulp.parallel(pugToHtml, styles, script, imgMin, ico, serve)
