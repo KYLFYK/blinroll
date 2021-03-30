@@ -1,0 +1,30 @@
+extends  ../modules/log-layout
+
+block heads
+    title BlinRoll - Регистрация
+
+block content
+    form
+        .title Регистрация
+        .reg__fields
+            .reg__fields-elem
+                .reg__fields-elem-name Номер телефона
+                .reg__fields-elem-input.tel
+                    input(type='tel', name='tel', placeholder='+7 (098) 765-43-21', required='required')
+                    .ico
+            .reg__fields-elem
+                .reg__fields-elem-name Пароль
+                .reg__fields-elem-input.lock
+                    input(type='password', name='password', required='required')
+                    .ico
+            .reg__fields-elem
+                .reg__fields-elem-name Повтор пароля
+                .reg__fields-elem-input.lock
+                    input(type='password', name='password-repeat', required='required')
+                    .ico
+        .reg__remember
+            input(type='checkbox').input-check#rememberMe
+            label(for='rememberMe').input-label Я принимаю условия пользовательского соглашения
+        input.reg__main-button(type='submit', value='Зарегистрироваться')
+        .reg__main-addon У меня есть аккаунт.
+            a(href='log-in.html') Войти

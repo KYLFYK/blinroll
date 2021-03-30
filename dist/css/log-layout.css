@@ -1,0 +1,283 @@
+html, body {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: "Montserrat", sans-serif;
+  color: #333333;
+  width: 100vw;
+  height: 100vh; }
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.reg__block {
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/log-in-bg.jpg");
+  background-size: cover;
+  padding: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  @media (max-width: 800px) {
+    .reg__block {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      padding: 20px;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: unset;
+      -ms-flex-pack: unset;
+      justify-content: unset; } }
+  @media (max-width: 500px) {
+    .reg__block {
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start; } }
+  .reg__block-info {
+    width: 460px;
+    height: 100%;
+    background-color: white;
+    -webkit-box-shadow: 0 20px 60px rgba(22, 36, 86, 0.15);
+    box-shadow: 0 20px 60px rgba(22, 36, 86, 0.15);
+    border-radius: 10px;
+    padding: 40px 40px 40px 50px; }
+    @media (max-width: 500px) {
+      .reg__block-info {
+        width: 100%;
+        padding: 20px 10px 20px 20px;
+        border-radius: 6px; } }
+    .reg__block-info form {
+      width: 100%;
+      height: 100%;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      overflow-y: auto;
+      padding-right: 10px; }
+      @media (max-width: 800px) {
+        .reg__block-info form {
+          max-height: calc(100vh - 40px - 80px - 80px - 10px);
+          height: calc(100vh - 40px - 80px - 80px - 10px); } }
+      @media (max-width: 500px) {
+        .reg__block-info form {
+          max-height: calc(100vh - 40px - 60px - 45px - 10px);
+          height: calc(100vh - 40px - 60px - 45px - 10px); } }
+      .reg__block-info form::-webkit-scrollbar {
+        background: transparent;
+        width: 4px;
+        max-width: 4px;
+        height: 4px;
+        -webkit-appearance: none; }
+      .reg__block-info form::-webkit-scrollbar-thumb {
+        background: #EBEBEB;
+        border-radius: 2px;
+        width: 4px;
+        height: 4px; }
+    .reg__block-info .title {
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      margin-bottom: 40px;
+      width: 100%; }
+      @media (max-width: 500px) {
+        .reg__block-info .title {
+          margin-bottom: 30px;
+          margin-top: 10px;
+          font-size: 14px; } }
+
+.reg__fields {
+  width: 100%; }
+  .reg__fields-elem {
+    width: 100%; }
+    .reg__fields-elem:not(:last-of-type) {
+      margin-bottom: 28px; }
+      @media (max-width: 500px) {
+        .reg__fields-elem:not(:last-of-type) {
+          margin-bottom: 18px; } }
+    .reg__fields-elem-name {
+      margin-bottom: 6px;
+      font-size: 16px;
+      letter-spacing: 0.03em;
+      color: #333333; }
+      @media (max-width: 500px) {
+        .reg__fields-elem-name {
+          font-size: 14px; } }
+    .reg__fields-elem-input {
+      position: relative;
+      width: 100%;
+      height: 55px; }
+      @media (max-width: 500px) {
+        .reg__fields-elem-input {
+          height: 40px; } }
+      .reg__fields-elem-input input {
+        width: 100%;
+        height: 100%;
+        padding-left: 20px;
+        padding-right: 40px;
+        border-radius: 2px;
+        border: 1px solid #FF9737;
+        outline: none;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 0.08em;
+        font-family: "Exo 2", sans-serif;
+        -webkit-transition: border-color .3s ease-out;
+        -o-transition: border-color .3s ease-out;
+        transition: border-color .3s ease-out;
+        color: #333333;
+        background-image: -o-linear-gradient(45deg, transparent, transparent);
+        background-image: linear-gradient(45deg, transparent, transparent);
+        background-color: transparent; }
+        @media (max-width: 500px) {
+          .reg__fields-elem-input input {
+            padding-left: 14px;
+            padding-right: 34px;
+            font-size: 14px; } }
+        .reg__fields-elem-input input:hover, .reg__fields-elem-input input:focus {
+          border-color: #d06400; }
+      .reg__fields-elem-input .ico {
+        width: 20px;
+        height: 20px;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        pointer-events: none; }
+      .reg__fields-elem-input.tel .ico {
+        background-image: url("../ico/phone-orange.svg"); }
+      .reg__fields-elem-input.lock .ico {
+        background-image: url("../ico/lock-orange.svg"); }
+
+.reg__remember {
+  margin-top: 16px;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%; }
+  @media (max-width: 500px) {
+    .reg__remember {
+      margin-bottom: 20px;
+      padding-left: 5px;
+      padding-right: 5px; } }
+  .reg__remember .input-check {
+    position: absolute;
+    opacity: 0; }
+  .reg__remember .input-label {
+    color: #A7A7A7;
+    font-size: 14px;
+    line-height: 17px;
+    font-family: "Exo 2", sans-serif;
+    cursor: pointer;
+    -webkit-transition: color .3s ease-out;
+    -o-transition: color .3s ease-out;
+    transition: color .3s ease-out;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    @media (max-width: 500px) {
+      .reg__remember .input-label {
+        font-size: 12px; } }
+    .reg__remember .input-label::before {
+      content: '';
+      display: block;
+      border: 1px solid #A7A7A7;
+      border-radius: 2px;
+      width: 14px;
+      min-width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      margin-top: 1px;
+      -webkit-transition: border-color .3s ease-out;
+      -o-transition: border-color .3s ease-out;
+      transition: border-color .3s ease-out; }
+    .reg__remember .input-label:hover {
+      color: #333333; }
+      .reg__remember .input-label:hover::before {
+        border-color: #333333; }
+  .reg__remember .input-check:checked + .input-label {
+    color: #333333; }
+    .reg__remember .input-check:checked + .input-label::before {
+      border-color: #FF9737;
+      background-color: #FF9737; }
+
+.reg__main-button {
+  font-family: "Exo 2", sans-serif;
+  padding: 16px 60px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  background-image: -o-linear-gradient(353.5deg, #24FF3C 0%, #2AD6F7 100%);
+  background-image: linear-gradient(96.5deg, #24FF3C 0%, #2AD6F7 100%);
+  border: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+  outline: none;
+  -webkit-transition: -webkit-box-shadow .3s ease-out;
+  transition: -webkit-box-shadow .3s ease-out;
+  -o-transition: box-shadow .3s ease-out;
+  transition: box-shadow .3s ease-out;
+  transition: box-shadow .3s ease-out, -webkit-box-shadow .3s ease-out; }
+  @media (max-width: 500px) {
+    .reg__main-button {
+      font-size: 14px;
+      line-height: 17px;
+      padding: 10px 20px;
+      margin-bottom: 14px; } }
+  .reg__main-button:hover {
+    -webkit-box-shadow: 0 10px 20px rgba(39, 234, 158, 0.19);
+    box-shadow: 0 10px 20px rgba(39, 234, 158, 0.19); }
+
+.reg__main-addon {
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.03em; }
+  @media (max-width: 500px) {
+    .reg__main-addon {
+      font-size: 12px;
+      line-height: 15px; } }
+  .reg__main-addon a {
+    margin-left: 6px;
+    color: inherit; }
+
+.reg__logo {
+  background-color: white;
+  background-image: url("../ico/logo.svg");
+  background-size: 56px 56px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  display: block;
+  width: 100px;
+  height: 80px;
+  border-radius: 6px; }
+  @media (max-width: 800px) {
+    .reg__logo {
+      margin-bottom: 20px;
+      min-height: 80px; } }
+  @media (max-width: 500px) {
+    .reg__logo {
+      width: 72px;
+      height: 60px;
+      min-height: 60px;
+      background-size: 40px 40px;
+      border-radius: 3px; } }

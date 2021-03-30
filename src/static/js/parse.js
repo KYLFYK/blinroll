@@ -18,10 +18,46 @@ function byFieldAnother(field) {
     return (a, b) => a[field] > b[field] ? -1 : 1;
 }
 
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function setCookie(name, options) {
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(options)
+}
+
+function addCartToCookie() {
+    let cartOptions = {
+
+    }
+
+    if (document.querySelectorAll('.cart-block__items-elem').length) {
+        document.querySelectorAll('.cart-block__items-elem').forEach(cartItem => {
+            let thisName = cartItem.getAttribute('data-cart-id')
+
+            cartOptions[thisName] = {
+                id: Number(cartItem.getAttribute('data-cart-id')),
+                image: cartItem.querySelector('.elem-img').getAttribute('style'),
+                name: cartItem.querySelector('.name').textContent,
+                weight: Number(cartItem.querySelector('.elem-info .weight').textContent.split(' ')[0]),
+                amount: Number(cartItem.querySelector('.count').textContent),
+                cost: Number(cartItem.querySelector('.elem-cost .value').textContent)
+            }
+        })
+    }
+
+    let thisJsonString = JSON.stringify(cartOptions)
+    setCookie('cartBlock', thisJsonString)
+}
+
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ))
+    return matches ? decodeURIComponent(matches[1]) : undefined
 }
 
 let sortIncrease = true
@@ -281,22 +317,22 @@ function addToCart (idOfC) {
                 cartInfo.items.push(cartObj)
 
                 let newCartBlock = `
-                <div class="cart-block__items-elem" data-cart-id="${cartItem.id}">
-                    <div class="elem-img" style="background-image: url('${cartItem.image}')">
-                      <div class="count closed">1</div>
+                    <div class="cart-block__items-elem" data-cart-id="${cartItem.id}">
+                        <div class="elem-img" style="background-image: url('${cartItem.image}')">
+                          <div class="count closed">1</div>
+                        </div>
+                        <div class="elem-info">
+                          <div class="name">${cartItem.name}</div>
+                          <div class="weight">${cartItem.weight} г.</div>
+                        </div>
+                        <div class="elem-cost"><span class="value">${cartItem.cost}</span><span class="rub"> ₽</span></div>
+                        <div class="elem-inc__block">
+                          <div class="elem-inc-arr increase"></div>
+                          <div class="elem-inc-arr decrease"></div>
+                        </div>
+                        <div class="elem-delete"></div>
                     </div>
-                    <div class="elem-info">
-                      <div class="name">${cartItem.name}</div>
-                      <div class="weight">${cartItem.weight} г.</div>
-                    </div>
-                    <div class="elem-cost"><span class="value">${cartItem.cost}</span><span class="rub"> ₽</span></div>
-                    <div class="elem-inc__block">
-                      <div class="elem-inc-arr increase"></div>
-                      <div class="elem-inc-arr decrease"></div>
-                    </div>
-                    <div class="elem-delete"></div>
-                </div>
-            `
+                `
 
                 cartItemsBlock.innerHTML += newCartBlock
                 cartItemsBlock.scrollTop = document.querySelector('.cart__wrapper .cart-block__items').scrollHeight
@@ -327,6 +363,8 @@ function addToCart (idOfC) {
             checkCostWeight()
 
             finded = true
+
+            addCartToCookie()
         }
     })
 
@@ -381,6 +419,8 @@ function addToCart (idOfC) {
                 allPrice.textContent = cartInfo.cost
 
                 checkCostWeight()
+
+                addCartToCookie()
             }
         })
     }
@@ -412,6 +452,8 @@ function removeFromCt (idOfC) {
             }
 
             checkCostWeight()
+
+            addCartToCookie()
         }
     })
 
@@ -454,6 +496,8 @@ function deleteAllCart () {
     }
 
     checkCostWeight()
+
+    addCartToCookie()
 }
 
 function calcCartLength () {
@@ -543,6 +587,8 @@ document.querySelector('.cart-block__items').addEventListener('click', (e) => {
         } else {
             countOfOrds.classList.add('closed')
         }
+
+        addCartToCookie()
     }
 })
 
@@ -568,3 +614,70 @@ clearButton.addEventListener('click', (e) => {
 })
 
 // --> Cart logic
+
+function checkCartForAmount() {
+    let allCartElems = document.querySelectorAll('.cart-block__items-elem')
+
+    if (allCartElems.length) {
+        allCartElems.forEach(cartElem => {
+            if (Number(cartElem.querySelector('.count').textContent) > 1) {
+                cartElem.querySelector('.count').classList.remove('closed')
+            }
+        })
+    }
+}
+
+if (JSON.parse(getCookie('cartBlock'))) {
+    for (key in JSON.parse(getCookie('cartBlock'))) {
+        cartInfo.items.push(JSON.parse(getCookie('cartBlock'))[key])
+    }
+
+    cartInfo.items.forEach(item => {
+        let newCartBlock = `
+            <div class="cart-block__items-elem" data-cart-id="${item.id}">
+                <div class="elem-img" style="${item.image}">
+                  <div class="count closed">${item.amount}</div>
+                </div>
+                <div class="elem-info">
+                  <div class="name">${item.name}</div>
+                  <div class="weight">${item.weight} г.</div>
+                </div>
+                <div class="elem-cost"><span class="value">${item.cost}</span><span class="rub"> ₽</span></div>
+                <div class="elem-inc__block">
+                  <div class="elem-inc-arr increase"></div>
+                  <div class="elem-inc-arr decrease"></div>
+                </div>
+                <div class="elem-delete"></div>
+            </div>
+        `
+
+        cartItemsBlock.innerHTML += newCartBlock
+        cartItemsBlock.scrollTop = document.querySelector('.cart__wrapper .cart-block__items').scrollHeight
+
+        let countOfCart = calcCartLength()
+
+        countOfOrds.textContent = countOfCart.toString()
+
+        if (countOfCart < 1) {
+            countOfOrds.classList.add('closed')
+        } else {
+            countOfOrds.classList.remove('closed')
+        }
+
+        if (cartInfo.items.length) {
+            countOfOrds.classList.remove('closed')
+        } else {
+            countOfOrds.classList.add('closed')
+        }
+
+        cartInfo.cost += item.cost * item.amount
+        cartInfo.weight += item.weight * item.amount
+
+        allWeight.textContent = cartInfo.weight
+        allPrice.textContent = cartInfo.cost
+
+        checkCostWeight()
+    })
+
+    checkCartForAmount()
+}

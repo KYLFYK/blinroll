@@ -1,0 +1,324 @@
+@import 'variable';
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $mts;
+    color: $c-black;
+    width: 100vw;
+    height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.reg {
+    &__block {
+        width: 100%;
+        height: 100%;
+        background-image: url('../img/log-in-bg.jpg');
+        background-size: cover;
+        padding: 60px;
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: 800px) {
+            flex-direction: column;
+            padding: 20px;
+            align-items: center;
+            justify-content: unset;
+        }
+
+        @media (max-width: 500px) {
+            align-items: flex-start;
+        }
+
+        &-info {
+            width: 460px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 0 20px 60px rgba(22, 36, 86, 0.15);
+            border-radius: 10px;
+            padding: 40px 40px 40px 50px;
+
+            @media (max-width: 500px) {
+                width: 100%;
+                padding: 20px 10px 20px 20px;
+                border-radius: 6px;
+            }
+
+            form {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: auto;
+                padding-right: 10px;
+
+                @media (max-width: 800px) {
+                    max-height: calc(100vh - 40px - 80px - 80px - 10px);
+                    height: calc(100vh - 40px - 80px - 80px - 10px);
+                }
+
+                @media (max-width: 500px) {
+                    max-height: calc(100vh - 40px - 60px - 45px - 10px);
+                    height: calc(100vh - 40px - 60px - 45px - 10px);
+                }
+
+                &::-webkit-scrollbar {
+                    background: transparent;
+                    width: 4px;
+                    max-width: 4px;
+                    height: 4px;
+                    -webkit-appearance: none;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: $c-gray;
+                    border-radius: 2px;
+                    width: 4px;
+                    height: 4px;
+                }
+            }
+
+            .title {
+                font-weight: bold;
+                font-size: 14px;
+                letter-spacing: 0.03em;
+                margin-bottom: 40px;
+                width: 100%;
+
+                @media (max-width: 500px) {
+                    margin-bottom: 30px;
+                    margin-top: 10px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    &__fields {
+        width: 100%;
+
+        &-elem {
+            width: 100%;
+
+            &:not(:last-of-type) {
+                margin-bottom: 28px;
+
+                @media (max-width: 500px) {
+                    margin-bottom: 18px;
+                }
+            }
+
+            &-name {
+                margin-bottom: 6px;
+                font-size: 16px;
+                letter-spacing: 0.03em;
+                color: $c-black;
+
+                @media (max-width: 500px) {
+                    font-size: 14px;
+                }
+            }
+
+            &-input {
+                position: relative;
+                width: 100%;
+                height: 55px;
+
+                @media (max-width: 500px) {
+                    height: 40px;
+                }
+
+                input {
+                    width: 100%;
+                    height: 100%;
+                    padding-left: 20px;
+                    padding-right: 40px;
+                    border-radius: 2px;
+                    border: 1px solid $c-orange;
+                    outline: none;
+                    font-size: 16px;
+                    line-height: 19px;
+                    letter-spacing: 0.08em;
+                    font-family: $exo;
+                    transition: border-color .3s ease-out;
+                    color: $c-black;
+                    background-image: linear-gradient(45deg, transparent, transparent);
+                    background-color: transparent;
+
+                    @media (max-width: 500px) {
+                        padding-left: 14px;
+                        padding-right: 34px;
+                        font-size: 14px;
+                    }
+
+
+                    &:hover, &:focus {
+                        border-color: $c-orange-dark;
+                    }
+                }
+
+                .ico {
+                    width: 20px;
+                    height: 20px;
+                    background-size: 100% 100%;
+                    position: absolute;
+                    top: 50%;
+                    right: 20px;
+                    transform: translateY(-50%);
+                    pointer-events: none;
+                }
+
+                &.tel {
+                    .ico {
+                        background-image: url('../ico/phone-orange.svg');
+                    }
+                }
+
+                &.lock {
+                    .ico {
+                        background-image: url('../ico/lock-orange.svg');
+                    }
+                }
+            }
+        }
+    }
+
+    &__remember {
+        margin-top: 16px;
+        margin-bottom: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+
+        @media (max-width: 500px) {
+            margin-bottom: 20px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .input-check {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .input-label {
+            color: #A7A7A7;
+            font-size: 14px;
+            line-height: 17px;
+            font-family: $exo;
+            cursor: pointer;
+            transition: color .3s ease-out;
+            display: flex;
+
+            @media (max-width: 500px) {
+                font-size: 12px;
+            }
+
+            &::before {
+                content: '';
+                display: block;
+                border: 1px solid #A7A7A7;
+                border-radius: 2px;
+                width: 14px;
+                min-width: 14px;
+                height: 14px;
+                margin-right: 8px;
+                margin-top: 1px;
+                transition: border-color .3s ease-out;
+            }
+
+            &:hover {
+                color: $c-black;
+
+                &::before {
+                    border-color: $c-black;
+                }
+            }
+        }
+
+        .input-check:checked + .input-label {
+            color: $c-black;
+
+            &::before {
+                border-color: $c-orange;
+                background-color: $c-orange;
+            }
+        }
+    }
+
+    &__main-button {
+        font-family: $exo;
+        padding: 16px 60px;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 24px;
+        background-image: linear-gradient(96.5deg, #24FF3C 0%, #2AD6F7 100%);
+        border: none;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 20px;
+        outline: none;
+        transition: box-shadow .3s ease-out;
+
+        @media (max-width: 500px) {
+            font-size: 14px;
+            line-height: 17px;
+            padding: 10px 20px;
+            margin-bottom: 14px;
+        }
+
+        &:hover {
+            box-shadow: 0 10px 20px rgba(39, 234, 158, 0.19);
+        }
+    }
+
+    &__main-addon {
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: 0.03em;
+
+        @media (max-width: 500px) {
+            font-size: 12px;
+            line-height: 15px;
+        }
+
+        a {
+            margin-left: 6px;
+            color: inherit;
+        }
+    }
+
+    &__logo {
+        background-color: white;
+        background-image: url('../ico/logo.svg');
+        background-size: 56px 56px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        display: block;
+        width: 100px;
+        height: 80px;
+        border-radius: 6px;
+
+        @media (max-width: 800px) {
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        @media (max-width: 500px) {
+            width: 72px;
+            height: 60px;
+            min-height: 60px;
+            background-size: 40px 40px;
+            border-radius: 3px;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta charset="utf-8">
+    <link rel="icon" sizes="256x256" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&amp;family=Montserrat:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/log-layout.css">
+    <title>BlinRoll - Вход</title>
+  </head>
+  <body>
+    <main class="reg__block"><a class="reg__logo" href="/"></a>
+      <div class="reg__block-info">
+        <form>
+          <div class="title">Вход в аккаунт</div>
+          <div class="reg__fields">
+            <div class="reg__fields-elem">
+              <div class="reg__fields-elem-name">Номер телефона</div>
+              <div class="reg__fields-elem-input tel">
+                <input type="tel" placeholder="+7 (098) 765-43-21" required="required">
+                <div class="ico"></div>
+              </div>
+            </div>
+            <div class="reg__fields-elem">
+              <div class="reg__fields-elem-name">Пароль</div>
+              <div class="reg__fields-elem-input lock">
+                <input type="password" required="required">
+                <div class="ico"></div>
+              </div>
+            </div>
+          </div>
+          <div class="reg__remember">
+            <input class="input-check" type="checkbox" id="rememberMe">
+            <label class="input-label" for="rememberMe">Запомнить на этом устройстве</label>
+          </div>
+          <input class="reg__main-button" type="submit" value="Войти">
+          <div class="reg__main-addon">У меня нет аккаунта.<a href="registration.html">Зарегистрироваться</a></div>
+        </form>
+      </div>
+    </main>
+    <script src="js/log-in.js"></script>
+  </body>
+</html>

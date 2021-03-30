@@ -1,0 +1,25 @@
+extends  ../modules/log-layout
+
+block heads
+    title BlinRoll - Вход
+
+block content
+    form
+        .title Вход в аккаунт
+        .reg__fields
+            .reg__fields-elem
+                .reg__fields-elem-name Номер телефона
+                .reg__fields-elem-input.tel
+                    input(type='tel', placeholder='+7 (098) 765-43-21', required='required')
+                    .ico
+            .reg__fields-elem
+                .reg__fields-elem-name Пароль
+                .reg__fields-elem-input.lock
+                    input(type='password', required='required')
+                    .ico
+        .reg__remember
+            input(type='checkbox').input-check#rememberMe
+            label(for='rememberMe').input-label Запомнить на этом устройстве
+        input.reg__main-button(type='submit', value='Войти')
+        .reg__main-addon У меня нет аккаунта.
+            a(href='registration.html') Зарегистрироваться

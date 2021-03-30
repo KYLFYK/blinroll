@@ -28,3 +28,12 @@ if (document.querySelector('.header-burger')) {
         document.querySelector('.mobile__header').classList.toggle('closed')
     })
 }
+
+if (document.querySelectorAll('.mobile__header-nav a').length) {
+    document.querySelectorAll('.mobile__header-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.header-burger').classList.remove('active')
+            document.querySelector('.mobile__header').classList.add('closed')
+        })
+    })
+}
