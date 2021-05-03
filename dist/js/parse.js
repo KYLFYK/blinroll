@@ -803,7 +803,12 @@ const loadUserInfo = async function (phoneNumber) {
   
           document.querySelector('select.canHide.adress').insertAdjacentHTML('beforeend', field)
         })
+        document.querySelector('select.canHide.adress.hideIfSelf').classList.remove('hidden')
+      } else {
+        document.querySelector('select.canHide.adress.hideIfSelf').classList.add('hidden')
       }
+    
+      document.querySelectorAll('.hideIfValid').forEach(item => item.classList.add('hidden'))
   
       return userInfo.client
     } else {
@@ -817,7 +822,15 @@ const loadUserInfo = async function (phoneNumber) {
   }
 };
 
-const sendOrder = async function (name, phone, delivery) {
+if (document.querySelector('.changeDest')) {
+  document.querySelector('.changeDest input').addEventListener('change', () => {
+    document.querySelectorAll('.cart__user-info .hideIfSelf').forEach(item => {
+      item.classList.toggle('hidden')
+    })
+  })
+}
+
+const sendOrder = async function (name, phone, delivery, comment, isSelf, district, street, house, flat) {
   let arr = []
   
   cartInfo.items.forEach((elem) => {
@@ -831,7 +844,13 @@ const sendOrder = async function (name, phone, delivery) {
   
   const orders = JSON.stringify(arr);
   const client = JSON.stringify({"phone": phone, "name": name, "birthday": "2000-11-03"})
-  const deliver = JSON.stringify({"delivery_type":"Самовывоз", "comment": ""})
+  let deliver
+  
+  if (isSelf) {
+    deliver = JSON.stringify({"delivery_type":"Самовывоз", "comment": comment})
+  } else {
+    deliver = JSON.stringify({"delivery_type":"Доставка", "district":district, "street":street, house:house, "flat":flat, "comment":comment})
+  }
   
   const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery=${deliver}`
   
@@ -842,7 +861,7 @@ const sendOrder = async function (name, phone, delivery) {
   
   if (xhr.status !== 200) {
     // обработать ошибку
-    alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+    alert( 'Ожидайте звонка оператора!' ); // пример вывода: 404: Not Found
   }
 };
 
@@ -868,10 +887,16 @@ document.querySelector('button.canHide.sendOrder').addEventListener('click', (e)
   const number = document.querySelector('.cart__user-info .input.phonenumber').value
   const name = document.querySelector('.cart__user-info .input.name').value
   const selectedCity = document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex] ? document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex].text : null
-  const enteredAdress = document.querySelector('.cart__user-info .input.canHide.altAdress').value
+  const comment = document.querySelector('.ccomment.hideIfSelf').value
+  const isSelf = document.querySelector('label.canHide.changeDest input').checked
   
-  if (number && selectedCity || number && enteredAdress) {
-    sendOrder(name, number, enteredAdress || selectedCity).then(r => {
+  const district = document.querySelector('.canHide.district.hideIfSelf')
+  const street = document.querySelector('.canHide.street.hideIfSelf')
+  const house = document.querySelector('.canHide.house.hideIfSelf')
+  const flat = document.querySelector('.canHide.flat.hideIfSelf')
+  
+  if (number && selectedCity && cartInfo.items.length || number && district && cartInfo.items.length || isSelf) {
+    sendOrder(name, number, district || selectedCity, comment, isSelf, district, street, house, flat).then(r => {
     
     })
   } else {

@@ -4,15 +4,17 @@
 		input(type='tel', placeholder='+79193933506', value='79193933506').input.phonenumber
 		button.checkNumber Далее
 		h5.hidden.canHide Информация
-		input.hidden.canHide(type='text', placeholder='Ваше имя').input.name
-		input.hidden.canHide(type='date', placeholder='Дата рождения').input.date
+		input.hidden.canHide(type='text', placeholder='Ваше имя').input.name.hideIfValid
+		input.hidden.canHide(type='date', placeholder='Дата рождения').input.date.hideIfValid
 		h5.hidden.canHide Доставка
-		select.hidden.canHide.adress
-			option Вариант 1
-			option Вариант 2
-			option Вариант 3
-		input(type='text', placeholder='Введите адрес').input.hidden.canHide.altAdress
-		//label.hidden.canHide
-		//	input(type='checkbox').withoutDeliver
-		//	span.text Сомовывоз
+		select.hidden.canHide.adress.hideIfSelf
+			option Введите ниже
+		input(type='text', placeholder='Район').input.hidden.canHide.district.hideIfSelf
+		input(type='text', placeholder='Улица').input.hidden.canHide.street.hideIfSelf
+		input(type='text', placeholder='Дом').input.hidden.canHide.house.hideIfSelf
+		input(type='text', placeholder='Квартира').input.hidden.canHide.flat.hideIfSelf
+		input(type='text', placeholder='Комментарий для курьера').input.hidden.canHide.ccomment.hideIfSelf
+		label.hidden.canHide.changeDest
+			input(type='checkbox').withoutDeliver
+			span.text Сомовывоз
 		button.hidden.canHide.sendOrder Оформить заказ
