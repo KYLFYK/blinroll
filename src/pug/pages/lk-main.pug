@@ -1,0 +1,51 @@
+extends  ../modules/layout
+
+block heads
+    link(rel='stylesheet' href='css/lk-layout.css')
+    title Blin Roll - Личный кабинет
+
+block content
+    .lk__wrapper
+        .container
+            ul.lk__nav
+                li.lk__nav-item.active
+                    a(href='lk-main.pug') Аккаунт
+                li.lk__nav-item
+                    a(href='lk-orders.pug') Мои заказы
+                li.lk__nav-item
+                    a(href='lk-history.pug') История заказов
+            h1.lk-title Данные о вашем аккаунте
+            form
+                .lk__fileds
+                    .lk__fileds-item
+                        .filed-title Номер телефона
+                        .filed
+                            input(type='tel', name='tel', id='tel', readonly='readonly', value='+7 (123) 456 78-90')
+                            .ico.tel
+                            .ico-e.edit
+                    .lk__fileds-item
+                        .filed-title Номер телефона
+                        .filed
+                            input(type='email', name='email', id='email', readonly='readonly', value='your@mail.ru')
+                            .ico.mail
+                            .ico-e.edit
+                .change-password
+                    span#changePassword Сменить пароль
+                    .change-password__window
+                        .change-password__block
+                            .close
+                            .change-password-title Смена пароля
+                            form
+                                .change-password-fileds
+                                    .change-password-fileds-item
+                                        .filed-title Новый пароль
+                                        .filed
+                                            input(type='password', name='password', id='newPassword', required='required')
+                                            .ico.eye-closed
+                                    .change-password-fileds-item
+                                        .filed-title Повторите новый пароль
+                                        .filed
+                                            input(type='password', name='password-repeat', id='newPasswordRepeat', required='required')
+                                            .ico.eye-opened
+                                input.button.green.button-lg(type='submit', value='Сохранить')
+    include ../page_modules/sale-block

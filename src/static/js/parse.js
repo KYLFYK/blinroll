@@ -1,108 +1,118 @@
-let catsList = []
-let currentItems = []
+let catsList = [];
+let currentItems = [];
 
 let cartInfo = {
-    items: [],
-    cost: 0,
-    weight: 0
-}
+  items: [],
+  cost: 0,
+  weight: 0,
+};
 
-const menuBlock = document.querySelector('.menu__wrapper .menu-block-header ul.menu__list')
-const itemsBlock = document.querySelector('section.menu__wrapper .menu-block-content')
+const menuBlock = document.querySelector(
+  ".menu__wrapper .menu-block-header ul.menu__list"
+);
+const itemsBlock = document.querySelector(
+  "section.menu__wrapper .menu-block-content"
+);
 
 function byField(field) {
-    return (a, b) => a[field] > b[field] ? 1 : -1;
+  return (a, b) => (a[field] > b[field] ? 1 : -1);
 }
 
 function byFieldAnother(field) {
-    return (a, b) => a[field] > b[field] ? -1 : 1;
+  return (a, b) => (a[field] > b[field] ? -1 : 1);
 }
 
-
 function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function setCookie(name, options) {
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(options)
+  document.cookie =
+    encodeURIComponent(name) + "=" + encodeURIComponent(options);
 }
 
 function addCartToCookie() {
-    let cartOptions = {
+  let cartOptions = {};
 
-    }
+  if (document.querySelectorAll(".cart-block__items-elem").length) {
+    document.querySelectorAll(".cart-block__items-elem").forEach((cartItem) => {
+      let thisName = cartItem.getAttribute("data-cart-id");
 
-    if (document.querySelectorAll('.cart-block__items-elem').length) {
-        document.querySelectorAll('.cart-block__items-elem').forEach(cartItem => {
-            let thisName = cartItem.getAttribute('data-cart-id')
+      cartOptions[thisName] = {
+        id: Number(cartItem.getAttribute("data-cart-id")),
+        image: cartItem.querySelector(".elem-img").getAttribute("style"),
+        name: cartItem.querySelector(".name").textContent,
+        weight: Number(
+          cartItem.querySelector(".elem-info .weight").textContent.split(" ")[0]
+        ),
+        amount: Number(cartItem.querySelector(".count").textContent),
+        cost: Number(cartItem.querySelector(".elem-cost .value").textContent),
+      };
+    });
+  }
 
-            cartOptions[thisName] = {
-                id: Number(cartItem.getAttribute('data-cart-id')),
-                image: cartItem.querySelector('.elem-img').getAttribute('style'),
-                name: cartItem.querySelector('.name').textContent,
-                weight: Number(cartItem.querySelector('.elem-info .weight').textContent.split(' ')[0]),
-                amount: Number(cartItem.querySelector('.count').textContent),
-                cost: Number(cartItem.querySelector('.elem-cost .value').textContent)
-            }
-        })
-    }
-
-    let thisJsonString = JSON.stringify(cartOptions)
-    setCookie('cartBlock', thisJsonString)
+  let thisJsonString = JSON.stringify(cartOptions);
+  setCookie("cartBlock", thisJsonString);
 }
 
 function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ))
-    return matches ? decodeURIComponent(matches[1]) : undefined
+  let matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-let sortIncrease = true
+let sortIncrease = true;
 
 const parseCategories = () => {
+  if (menuBlock) {
     catsList.forEach((item, index) => {
-        let newMenuItem
+      let newMenuItem;
 
-        if (index === 0) {
-            newMenuItem = `
+      if (index === 0) {
+        newMenuItem = `
                 <li class="menu__list-item active" data-id="${item.itemId}">${item.itemName}</li>
-            `
-        } else {
-            newMenuItem = `
+            `;
+      } else {
+        newMenuItem = `
                 <li class="menu__list-item" data-id="${item.itemId}">${item.itemName}</li>
-            `
-        }
+            `;
+      }
 
-        menuBlock.innerHTML += newMenuItem
-    })
-}
+      menuBlock.innerHTML += newMenuItem;
+    });
+  }
+};
 
 const parseItems = (increase) => {
-
+  if (itemsBlock) {
     if (!increase) {
-        currentItems.sort(byFieldAnother('cost'))
+      currentItems.sort(byFieldAnother("cost"));
     } else {
-        currentItems.sort(byField('cost'))
+      currentItems.sort(byField("cost"));
     }
 
-    itemsBlock.innerHTML = ``
+    itemsBlock.innerHTML = ``;
 
-    currentItems.forEach(item => {
-        let compItem = ``
+    currentItems.forEach((item) => {
+      let compItem = ``;
 
-        item.composition.forEach(compose => {
-            compItem += `<li class="consist-item">${compose}</li>`
-        })
+      item.composition.forEach((compose) => {
+        compItem += `<li class="consist-item">${compose}</li>`;
+      });
 
-        let starRate = getRandomInt(4, 6)
+      let starRate = getRandomInt(4, 6);
 
-        let newItem
+      let newItem;
 
-        if (starRate === 4) {
-            newItem = `
+      if (starRate === 4) {
+        newItem = `
             <div class="menu-item" data-order-id="${item.id}" style="background-image: url(${item.image})">
                 <div class="menu-item__info">
                   <div class="name">${item.name}</div>
@@ -127,9 +137,9 @@ const parseItems = (increase) => {
                   </div>
                 </div>
               </div>
-        `
-        } else {
-            newItem = `
+        `;
+      } else {
+        newItem = `
             <div class="menu-item" data-order-id="${item.id}" style="background-image: url(${item.image})">
                 <div class="menu-item__info">
                   <div class="name">${item.name}</div>
@@ -154,169 +164,219 @@ const parseItems = (increase) => {
                   </div>
                 </div>
               </div>
-        `
-        }
+        `;
+      }
 
-        itemsBlock.innerHTML += newItem
-    })
+      itemsBlock.innerHTML += newItem;
+    });
 
-    itemsBlock.querySelectorAll('.menu-item').forEach(item => {
-        let thisOrdId = item.getAttribute('data-order-id')
+    itemsBlock.querySelectorAll(".menu-item").forEach((item) => {
+      let thisOrdId = item.getAttribute("data-order-id");
 
-        item.querySelector('.button.green.button-sm').addEventListener('click', () => {
-            addToCart(thisOrdId)
-        })
-    })
-}
+      item
+        .querySelector(".button.green.button-sm")
+        .addEventListener("click", () => {
+          addToCart(thisOrdId);
+        });
+    });
+  }
+};
 
 const connect = async function () {
-    let url = 'https://br-yalta.ru/categories'
+  let url = "https://br-yalta.ru/categories";
 
-    let response = await fetch(url)
+  let response = await fetch(url);
 
-    if (response.ok) {
-        let json = await response.json()
+  if (response.ok) {
+    let json = await response.json();
 
-        json.forEach(item => {
-            let cat = new Object({
-                itemId: item.id,
-                itemName: item.name
-            })
-            catsList.push(cat)
-        })
-    } else {
-        alert("Ошибка HTTP: " + response.status)
-    }
-}
+    json.forEach((item) => {
+      let cat = new Object({
+        itemId: item.id,
+        itemName: item.name,
+      });
+      catsList.push(cat);
+    });
+  } else {
+    alert("Ошибка HTTP: " + response.status);
+  }
+};
 
-const uploadItem = async function(itemId) {
-    let url = 'https://br-yalta.ru/products?category_id=' + itemId
+const uploadItem = async function (itemId) {
+  let url = "https://br-yalta.ru/products?category_id=" + itemId;
 
-    let response = await fetch(url)
+  let response = await fetch(url);
 
-    if (response.ok) {
-        let jsonItems = await response.json()
+  if (response.ok) {
+    let jsonItems = await response.json();
 
-        jsonItems.forEach(item => {
-            let itemObject = new Object({
-                id: item.id,
-                name: item.name,
-                amount: item.amount,
-                weight: item.weight,
-                cost: item.cost,
-                image: item.image,
-                composition: item.composition
-            })
+    jsonItems.forEach((item) => {
+      let itemObject = new Object({
+        id: item.id,
+        name: item.name,
+        amount: item.amount,
+        weight: item.weight,
+        cost: item.cost,
+        image: item.image,
+        composition: item.composition,
+      });
 
-            currentItems.push(itemObject)
-        })
-    }
-}
+      currentItems.push(itemObject);
+    });
+  }
+};
 
-connect().then( () => {
-    parseCategories()
+connect().then(() => {
+  parseCategories();
 
-    document.querySelectorAll('section.menu__wrapper  ul.menu__list li.menu__list-item').forEach(menuItem => {
-        menuItem.addEventListener('click', () => {
-            if (!menuItem.classList.contains('active')) {
-                if (document.querySelector('section.menu__wrapper  ul.menu__list li.menu__list-item.active')) {
-                    document.querySelector('section.menu__wrapper  ul.menu__list li.menu__list-item.active').classList.remove('active')
-                }
+  document
+    .querySelectorAll("section.menu__wrapper  ul.menu__list li.menu__list-item")
+    .forEach((menuItem) => {
+      menuItem.addEventListener("click", () => {
+        if (!menuItem.classList.contains("active")) {
+          if (
+            document.querySelector(
+              "section.menu__wrapper  ul.menu__list li.menu__list-item.active"
+            )
+          ) {
+            document
+              .querySelector(
+                "section.menu__wrapper  ul.menu__list li.menu__list-item.active"
+              )
+              .classList.remove("active");
+          }
 
-                currentItems = []
+          currentItems = [];
 
-                menuItem.classList.add('active')
-                let thisId = menuItem.getAttribute('data-id')
+          menuItem.classList.add("active");
+          let thisId = menuItem.getAttribute("data-id");
 
-                uploadItem(thisId).then( () => {
-                    parseItems(sortIncrease)
-                })
-            }
-        })
-    })
-})
-
-uploadItem(1).then( () => {
-    parseItems(sortIncrease)
-})
-
-document.querySelectorAll('.menu-block-header  ul.menu__filters li.menu__filters-item.sort').forEach(item => {
-    item.addEventListener('click', () => {
-        if (!item.classList.contains('active')) {
-            if (document.querySelector('.menu-block-header  ul.menu__filters li.menu__filters-item.sort.active')) {
-                document.querySelector('.menu-block-header  ul.menu__filters li.menu__filters-item.sort.active').classList.remove('active')
-            }
-
-            item.classList.add('active')
-
-            sortIncrease = item.classList.contains('increase')
-
-            parseItems(sortIncrease)
+          uploadItem(thisId).then(() => {
+            parseItems(sortIncrease);
+          });
         }
-    })
-})
+      });
+    });
+});
+
+uploadItem(1).then(() => {
+  parseItems(sortIncrease);
+});
+
+document
+  .querySelectorAll(
+    ".menu-block-header  ul.menu__filters li.menu__filters-item.sort"
+  )
+  .forEach((item) => {
+    item.addEventListener("click", () => {
+      if (!item.classList.contains("active")) {
+        if (
+          document.querySelector(
+            ".menu-block-header  ul.menu__filters li.menu__filters-item.sort.active"
+          )
+        ) {
+          document
+            .querySelector(
+              ".menu-block-header  ul.menu__filters li.menu__filters-item.sort.active"
+            )
+            .classList.remove("active");
+        }
+
+        item.classList.add("active");
+
+        sortIncrease = item.classList.contains("increase");
+
+        parseItems(sortIncrease);
+      }
+    });
+  });
 
 // Cart logic
 
-const cartItemsBlock = document.querySelector('.cart__wrapper .cart-block__items')
-const countOfOrds = document.querySelector('.cart__wrapper .cart__open .count-of-ord')
+const cartItemsBlock = document.querySelector(
+  ".cart__wrapper .cart-block__items"
+);
+const countOfOrds = document.querySelector(
+  ".cart__wrapper .cart__open .count-of-ord"
+);
 
-const allWeight = document.querySelector('.cart__wrapper .cart-block__items-cost .weight span.value')
-const allPrice = document.querySelector('.cart__wrapper .cart-block__items-cost .price span.value')
+const allWeight = document.querySelector(
+  ".cart__wrapper .cart-block__items-cost .weight span.value"
+);
+const allPrice = document.querySelector(
+  ".cart__wrapper .cart-block__items-cost .price span.value"
+);
 
-const priceWeightBlock = document.querySelector('.cart__wrapper .cart-block__items-cost')
-const acceptButton = document.querySelector('.cart__wrapper a.cart-accept')
-const clearButton = document.querySelector('.cart__wrapper a.cart-clean')
-const cartEmpty = document.querySelector('.cart__wrapper .cart-block__empty')
+const priceWeightBlock = document.querySelector(
+  ".cart__wrapper .cart-block__items-cost"
+);
+const acceptButton = document.querySelector(".cart__wrapper a.cart-accept");
+const clearButton = document.querySelector(".cart__wrapper a.cart-clean");
+const cartEmpty = document.querySelector(".cart__wrapper .cart-block__empty");
 
-checkCostWeight()
+checkCostWeight();
 
-function addToCart (idOfC) {
-    let finded = false
+function addToCart(idOfC) {
+  let finded = false;
 
-    currentItems.forEach(cartItem => {
-        if (Number(cartItem.id) === Number(idOfC)) {
-            document.querySelector('.cart__wrapper .cart__added-to-ct').classList.add('opened')
+  currentItems.forEach((cartItem) => {
+    if (Number(cartItem.id) === Number(idOfC)) {
+      document
+        .querySelector(".cart__wrapper .cart__added-to-ct")
+        .classList.add("opened");
 
-            setTimeout(() => {
-                document.querySelector('.cart__wrapper .cart__added-to-ct').classList.remove('opened')
-            }, 6000)
+      setTimeout(() => {
+        document
+          .querySelector(".cart__wrapper .cart__added-to-ct")
+          .classList.remove("opened");
+      }, 6000);
 
-            let haveItem = false
+      let haveItem = false;
 
-            cartInfo.items.forEach(item => {
-                if (Number(item.id) === Number(idOfC)) {
-                    haveItem = true
+      cartInfo.items.forEach((item) => {
+        if (Number(item.id) === Number(idOfC)) {
+          haveItem = true;
 
-                    item.amount ++
+          item.amount++;
 
-                    document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(cartElem => {
-                        if (Number(cartElem.getAttribute('data-cart-id')) === Number(idOfC)) {
-                            if (cartElem.querySelector('.count').classList.contains('closed')) {
-                                cartElem.querySelector('.count').classList.remove('closed')
-                            }
-
-                            let thisCount = Number(cartElem.querySelector('.count').textContent) + 1
-
-                            cartElem.querySelector('.count').textContent = thisCount.toString()
-                        }
-                    })
+          document
+            .querySelectorAll(
+              ".cart__wrapper .cart-block__items .cart-block__items-elem"
+            )
+            .forEach((cartElem) => {
+              if (
+                Number(cartElem.getAttribute("data-cart-id")) === Number(idOfC)
+              ) {
+                if (
+                  cartElem.querySelector(".count").classList.contains("closed")
+                ) {
+                  cartElem.querySelector(".count").classList.remove("closed");
                 }
-            })
 
-            if (!haveItem) {
-                let cartObj = new Object({
-                    id: cartItem.id,
-                    name: cartItem.name,
-                    amount: 1,
-                    weight: cartItem.weight,
-                    cost: cartItem.cost,
-                    image: cartItem.image
-                })
+                let thisCount =
+                  Number(cartElem.querySelector(".count").textContent) + 1;
 
-                cartInfo.items.push(cartObj)
+                cartElem.querySelector(
+                  ".count"
+                ).textContent = thisCount.toString();
+              }
+            });
+        }
+      });
 
-                let newCartBlock = `
+      if (!haveItem) {
+        let cartObj = new Object({
+          id: cartItem.id,
+          name: cartItem.name,
+          amount: 1,
+          weight: cartItem.weight,
+          cost: cartItem.cost,
+          image: cartItem.image,
+        });
+
+        cartInfo.items.push(cartObj);
+
+        let newCartBlock = `
                     <div class="cart-block__items-elem" data-cart-id="${cartItem.id}">
                         <div class="elem-img" style="background-image: url('${cartItem.image}')">
                           <div class="count closed">1</div>
@@ -332,308 +392,343 @@ function addToCart (idOfC) {
                         </div>
                         <div class="elem-delete"></div>
                     </div>
-                `
+                `;
 
-                cartItemsBlock.innerHTML += newCartBlock
-                cartItemsBlock.scrollTop = document.querySelector('.cart__wrapper .cart-block__items').scrollHeight
-            }
+        cartItemsBlock.innerHTML += newCartBlock;
+        cartItemsBlock.scrollTop = document.querySelector(
+          ".cart__wrapper .cart-block__items"
+        ).scrollHeight;
+      }
 
-            let countOfCart = calcCartLength()
+      let countOfCart = calcCartLength();
 
-            countOfOrds.textContent = countOfCart.toString()
+      countOfOrds.textContent = countOfCart.toString();
 
-            if (countOfCart < 1) {
-                countOfOrds.classList.add('closed')
-            } else {
-                countOfOrds.classList.remove('closed')
-            }
+      if (countOfCart < 1) {
+        countOfOrds.classList.add("closed");
+      } else {
+        countOfOrds.classList.remove("closed");
+      }
 
-            if (cartInfo.items.length) {
-                countOfOrds.classList.remove('closed')
-            } else {
-                countOfOrds.classList.add('closed')
-            }
+      if (cartInfo.items.length) {
+        countOfOrds.classList.remove("closed");
+      } else {
+        countOfOrds.classList.add("closed");
+      }
 
-            cartInfo.cost += cartItem.cost
-            cartInfo.weight += cartItem.weight
+      cartInfo.cost += cartItem.cost;
+      cartInfo.weight += cartItem.weight;
 
-            allWeight.textContent = cartInfo.weight
-            allPrice.textContent = cartInfo.cost
+      allWeight.textContent = cartInfo.weight;
+      allPrice.textContent = cartInfo.cost;
 
-            checkCostWeight()
+      checkCostWeight();
 
-            finded = true
+      finded = true;
 
-            addCartToCookie()
-        }
-    })
-
-    if (!finded) {
-        cartInfo.items.forEach(cartItem => {
-            if (Number(cartItem.id) === Number(idOfC)) {
-                document.querySelector('.cart__wrapper .cart__added-to-ct').classList.add('opened')
-
-                setTimeout(() => {
-                    document.querySelector('.cart__wrapper .cart__added-to-ct').classList.remove('opened')
-                }, 6000)
-
-                cartInfo.items.forEach(item => {
-                    if (Number(item.id) === Number(idOfC)) {
-
-                        item.amount ++
-
-                        document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(cartElem => {
-                            if (Number(cartElem.getAttribute('data-cart-id')) === Number(idOfC)) {
-                                if (cartElem.querySelector('.count').classList.contains('closed')) {
-                                    cartElem.querySelector('.count').classList.remove('closed')
-                                }
-
-                                let thisCount = Number(cartElem.querySelector('.count').textContent) + 1
-
-                                cartElem.querySelector('.count').textContent = thisCount.toString()
-                            }
-                        })
-                    }
-                })
-
-                let countOfCart = calcCartLength()
-
-                countOfOrds.textContent = countOfCart.toString()
-
-                if (countOfCart < 1) {
-                    countOfOrds.classList.add('closed')
-                } else {
-                    countOfOrds.classList.remove('closed')
-                }
-
-                if (cartInfo.items.length) {
-                    countOfOrds.classList.remove('closed')
-                } else {
-                    countOfOrds.classList.add('closed')
-                }
-
-                cartInfo.cost += cartItem.cost
-                cartInfo.weight += cartItem.weight
-
-                allWeight.textContent = cartInfo.weight
-                allPrice.textContent = cartInfo.cost
-
-                checkCostWeight()
-
-                addCartToCookie()
-            }
-        })
+      addCartToCookie();
     }
-}
+  });
 
-function removeFromCt (idOfC) {
+  if (!finded) {
     cartInfo.items.forEach((cartItem) => {
-        if (Number(cartItem.id) === Number(idOfC)) {
-            cartInfo.cost -= (cartItem.cost * cartItem.amount)
-            cartInfo.weight -= (cartItem.weight * cartItem.amount)
+      if (Number(cartItem.id) === Number(idOfC)) {
+        document
+          .querySelector(".cart__wrapper .cart__added-to-ct")
+          .classList.add("opened");
 
-            allWeight.textContent = cartInfo.weight
-            allPrice.textContent = cartInfo.cost
+        setTimeout(() => {
+          document
+            .querySelector(".cart__wrapper .cart__added-to-ct")
+            .classList.remove("opened");
+        }, 6000);
 
-            cartInfo.items.forEach((item, index) => {
-                if (Number(item.id) === Number(idOfC)) {
-                    cartInfo.items.splice(index, 1)
+        cartInfo.items.forEach((item) => {
+          if (Number(item.id) === Number(idOfC)) {
+            item.amount++;
+
+            document
+              .querySelectorAll(
+                ".cart__wrapper .cart-block__items .cart-block__items-elem"
+              )
+              .forEach((cartElem) => {
+                if (
+                  Number(cartElem.getAttribute("data-cart-id")) ===
+                  Number(idOfC)
+                ) {
+                  if (
+                    cartElem
+                      .querySelector(".count")
+                      .classList.contains("closed")
+                  ) {
+                    cartElem.querySelector(".count").classList.remove("closed");
+                  }
+
+                  let thisCount =
+                    Number(cartElem.querySelector(".count").textContent) + 1;
+
+                  cartElem.querySelector(
+                    ".count"
+                  ).textContent = thisCount.toString();
                 }
-            })
+              });
+          }
+        });
 
-            let countOfCart = calcCartLength()
+        let countOfCart = calcCartLength();
 
-            countOfOrds.textContent = countOfCart.toString()
-
-            if (countOfCart < 1) {
-                countOfOrds.classList.add('closed')
-            } else {
-                countOfOrds.classList.remove('closed')
-            }
-
-            checkCostWeight()
-
-            addCartToCookie()
-        }
-    })
-
-
-}
-
-function checkCostWeight () {
-    if (cartInfo.cost === 0) {
-        priceWeightBlock.classList.add('closed')
-        acceptButton.classList.add('closed')
-        clearButton.classList.add('closed')
-
-        cartEmpty.classList.remove('closed')
-    } else {
-        priceWeightBlock.classList.remove('closed')
-        acceptButton.classList.remove('closed')
-        clearButton.classList.remove('closed')
-
-        cartEmpty.classList.add('closed')
-    }
-}
-
-function deleteAllCart () {
-    cartInfo = {
-        items: [],
-        cost: 0,
-        weight: 0
-    }
-
-    document.querySelectorAll('.cart__wrapper .cart-block__items .cart-block__items-elem').forEach(item => item.remove())
-
-    let countOfCart = calcCartLength()
-
-    countOfOrds.textContent = countOfCart.toString()
-
-    if (countOfCart < 1) {
-        countOfOrds.classList.add('closed')
-    } else {
-        countOfOrds.classList.remove('closed')
-    }
-
-    checkCostWeight()
-
-    addCartToCookie()
-}
-
-function calcCartLength () {
-    let count = 0
-
-    cartInfo.items.forEach(item => {
-        count += Number(item.amount)
-    })
-
-    return count
-}
-
-document.querySelector('.cart-block__items').addEventListener('click', (e) => {
-    let target = e.target
-
-    if (target.className === 'elem-delete') {
-        let thisId = target.parentElement.getAttribute('data-cart-id')
-
-        target.parentElement.remove()
-
-        removeFromCt(thisId)
-    }
-
-    if (target.className === 'elem-inc-arr increase') {
-        let elem = target.parentElement.parentElement
-        let elemId = elem.getAttribute('data-cart-id')
-
-        addToCart(elemId)
-    }
-
-    if (target.className === 'elem-inc-arr decrease') {
-        let elem = target.parentElement.parentElement
-        let elemId = Number(elem.getAttribute('data-cart-id'))
-
-        let elemCost = Number(elem.querySelector('.elem-cost .value').textContent)
-        let elemWeight = Number(elem.querySelector('.elem-info .weight').textContent.replace(/[^\d]/g, ''))
-
-        let countOfThis = Number(elem.querySelector('.count').textContent)
-
-        if (countOfThis === 1) {
-            removeFromCt(elemId)
-
-            elem.remove()
-        } else if (countOfThis === 2) {
-            elem.querySelector('.count').textContent = (countOfThis - 1).toString()
-            elem.querySelector('.count').classList.add('closed')
-
-            cartInfo.items.forEach((cartItem) => {
-                if (Number(cartItem.id) === Number(elemId)) {
-                    cartItem.amount --
-                }
-            })
-
-            cartInfo.weight -= elemWeight
-            cartInfo.cost -= elemCost
-
-            allWeight.textContent = cartInfo.weight
-            allPrice.textContent = cartInfo.cost
-        } else {
-            elem.querySelector('.count').textContent = (countOfThis - 1).toString()
-
-            cartInfo.items.forEach((cartItem) => {
-                if (Number(cartItem.id) === Number(elemId)) {
-                    cartItem.amount --
-                }
-            })
-
-            cartInfo.weight -= elemWeight
-            cartInfo.cost -= elemCost
-
-            allWeight.textContent = cartInfo.weight
-            allPrice.textContent = cartInfo.cost
-        }
-
-        let countOfCart = calcCartLength()
-
-        countOfOrds.textContent = countOfCart.toString()
+        countOfOrds.textContent = countOfCart.toString();
 
         if (countOfCart < 1) {
-            countOfOrds.classList.add('closed')
+          countOfOrds.classList.add("closed");
         } else {
-            countOfOrds.classList.remove('closed')
+          countOfOrds.classList.remove("closed");
         }
 
         if (cartInfo.items.length) {
-            countOfOrds.classList.remove('closed')
+          countOfOrds.classList.remove("closed");
         } else {
-            countOfOrds.classList.add('closed')
+          countOfOrds.classList.add("closed");
         }
 
-        addCartToCookie()
+        cartInfo.cost += cartItem.cost;
+        cartInfo.weight += cartItem.weight;
+
+        allWeight.textContent = cartInfo.weight;
+        allPrice.textContent = cartInfo.cost;
+
+        checkCostWeight();
+
+        addCartToCookie();
+      }
+    });
+  }
+}
+
+function removeFromCt(idOfC) {
+  cartInfo.items.forEach((cartItem) => {
+    if (Number(cartItem.id) === Number(idOfC)) {
+      cartInfo.cost -= cartItem.cost * cartItem.amount;
+      cartInfo.weight -= cartItem.weight * cartItem.amount;
+
+      allWeight.textContent = cartInfo.weight;
+      allPrice.textContent = cartInfo.cost;
+
+      cartInfo.items.forEach((item, index) => {
+        if (Number(item.id) === Number(idOfC)) {
+          cartInfo.items.splice(index, 1);
+        }
+      });
+
+      let countOfCart = calcCartLength();
+
+      countOfOrds.textContent = countOfCart.toString();
+
+      if (countOfCart < 1) {
+        countOfOrds.classList.add("closed");
+      } else {
+        countOfOrds.classList.remove("closed");
+      }
+
+      checkCostWeight();
+
+      addCartToCookie();
     }
-})
+  });
+}
 
-document.querySelector('.cart__wrapper .cart__open').addEventListener('click', () => {
-    document.querySelector('.cart__wrapper .cart-block').classList.toggle('closed')
-})
+function checkCostWeight() {
+  if (cartInfo.cost === 0) {
+    priceWeightBlock.classList.add("closed");
+    acceptButton.classList.add("closed");
+    clearButton.classList.add("closed");
 
-document.querySelector('.cart__wrapper .cart-block .cart-block-close').addEventListener('click', () => {
-    document.querySelector('.cart__wrapper .cart-block').classList.add('closed')
-})
+    cartEmpty.classList.remove("closed");
+  } else {
+    priceWeightBlock.classList.remove("closed");
+    acceptButton.classList.remove("closed");
+    clearButton.classList.remove("closed");
 
-document.querySelector('.cart__wrapper .cart-block a.cart-continue').addEventListener('click', (e) => {
-    if (document.querySelector('.menu-block-content')) {
-        e.preventDefault()
-        document.querySelector('.cart__wrapper .cart-block').classList.add('closed')
+    cartEmpty.classList.add("closed");
+  }
+}
+
+function deleteAllCart() {
+  cartInfo = {
+    items: [],
+    cost: 0,
+    weight: 0,
+  };
+
+  document
+    .querySelectorAll(
+      ".cart__wrapper .cart-block__items .cart-block__items-elem"
+    )
+    .forEach((item) => item.remove());
+
+  let countOfCart = calcCartLength();
+
+  countOfOrds.textContent = countOfCart.toString();
+
+  if (countOfCart < 1) {
+    countOfOrds.classList.add("closed");
+  } else {
+    countOfOrds.classList.remove("closed");
+  }
+
+  checkCostWeight();
+
+  addCartToCookie();
+}
+
+function calcCartLength() {
+  let count = 0;
+
+  cartInfo.items.forEach((item) => {
+    count += Number(item.amount);
+  });
+
+  return count;
+}
+
+document.querySelector(".cart-block__items").addEventListener("click", (e) => {
+  let target = e.target;
+
+  if (target.className === "elem-delete") {
+    let thisId = target.parentElement.getAttribute("data-cart-id");
+
+    target.parentElement.remove();
+
+    removeFromCt(thisId);
+  }
+
+  if (target.className === "elem-inc-arr increase") {
+    let elem = target.parentElement.parentElement;
+    let elemId = elem.getAttribute("data-cart-id");
+
+    addToCart(elemId);
+  }
+
+  if (target.className === "elem-inc-arr decrease") {
+    let elem = target.parentElement.parentElement;
+    let elemId = Number(elem.getAttribute("data-cart-id"));
+
+    let elemCost = Number(elem.querySelector(".elem-cost .value").textContent);
+    let elemWeight = Number(
+      elem.querySelector(".elem-info .weight").textContent.replace(/[^\d]/g, "")
+    );
+
+    let countOfThis = Number(elem.querySelector(".count").textContent);
+
+    if (countOfThis === 1) {
+      removeFromCt(elemId);
+
+      elem.remove();
+    } else if (countOfThis === 2) {
+      elem.querySelector(".count").textContent = (countOfThis - 1).toString();
+      elem.querySelector(".count").classList.add("closed");
+
+      cartInfo.items.forEach((cartItem) => {
+        if (Number(cartItem.id) === Number(elemId)) {
+          cartItem.amount--;
+        }
+      });
+
+      cartInfo.weight -= elemWeight;
+      cartInfo.cost -= elemCost;
+
+      allWeight.textContent = cartInfo.weight;
+      allPrice.textContent = cartInfo.cost;
+    } else {
+      elem.querySelector(".count").textContent = (countOfThis - 1).toString();
+
+      cartInfo.items.forEach((cartItem) => {
+        if (Number(cartItem.id) === Number(elemId)) {
+          cartItem.amount--;
+        }
+      });
+
+      cartInfo.weight -= elemWeight;
+      cartInfo.cost -= elemCost;
+
+      allWeight.textContent = cartInfo.weight;
+      allPrice.textContent = cartInfo.cost;
     }
-})
 
-clearButton.addEventListener('click', (e) => {
-    e.preventDefault()
+    let countOfCart = calcCartLength();
 
-    deleteAllCart()
-})
+    countOfOrds.textContent = countOfCart.toString();
+
+    if (countOfCart < 1) {
+      countOfOrds.classList.add("closed");
+    } else {
+      countOfOrds.classList.remove("closed");
+    }
+
+    if (cartInfo.items.length) {
+      countOfOrds.classList.remove("closed");
+    } else {
+      countOfOrds.classList.add("closed");
+    }
+
+    addCartToCookie();
+  }
+});
+
+document
+  .querySelector(".cart__wrapper .cart__open")
+  .addEventListener("click", () => {
+    document
+      .querySelector(".cart__wrapper .cart-block")
+      .classList.toggle("closed");
+  });
+
+document
+  .querySelector(".cart__wrapper .cart-block .cart-block-close")
+  .addEventListener("click", () => {
+    document
+      .querySelector(".cart__wrapper .cart-block")
+      .classList.add("closed");
+  });
+
+document
+  .querySelector(".cart__wrapper .cart-block a.cart-continue")
+  .addEventListener("click", (e) => {
+    if (document.querySelector(".menu-block-content")) {
+      e.preventDefault();
+      document
+        .querySelector(".cart__wrapper .cart-block")
+        .classList.add("closed");
+    }
+  });
+
+clearButton.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  deleteAllCart();
+});
 
 // --> Cart logic
 
 function checkCartForAmount() {
-    let allCartElems = document.querySelectorAll('.cart-block__items-elem')
+  let allCartElems = document.querySelectorAll(".cart-block__items-elem");
 
-    if (allCartElems.length) {
-        allCartElems.forEach(cartElem => {
-            if (Number(cartElem.querySelector('.count').textContent) > 1) {
-                cartElem.querySelector('.count').classList.remove('closed')
-            }
-        })
-    }
+  if (allCartElems.length) {
+    allCartElems.forEach((cartElem) => {
+      if (Number(cartElem.querySelector(".count").textContent) > 1) {
+        cartElem.querySelector(".count").classList.remove("closed");
+      }
+    });
+  }
 }
 
-if (JSON.parse(getCookie('cartBlock'))) {
-    for (key in JSON.parse(getCookie('cartBlock'))) {
-        cartInfo.items.push(JSON.parse(getCookie('cartBlock'))[key])
-    }
+if (JSON.parse(getCookie("cartBlock"))) {
+  for (key in JSON.parse(getCookie("cartBlock"))) {
+    cartInfo.items.push(JSON.parse(getCookie("cartBlock"))[key]);
+  }
 
-    cartInfo.items.forEach(item => {
-        let newCartBlock = `
+  cartInfo.items.forEach((item) => {
+    let newCartBlock = `
             <div class="cart-block__items-elem" data-cart-id="${item.id}">
                 <div class="elem-img" style="${item.image}">
                   <div class="count closed">${item.amount}</div>
@@ -649,35 +744,37 @@ if (JSON.parse(getCookie('cartBlock'))) {
                 </div>
                 <div class="elem-delete"></div>
             </div>
-        `
+        `;
 
-        cartItemsBlock.innerHTML += newCartBlock
-        cartItemsBlock.scrollTop = document.querySelector('.cart__wrapper .cart-block__items').scrollHeight
+    cartItemsBlock.innerHTML += newCartBlock;
+    cartItemsBlock.scrollTop = document.querySelector(
+      ".cart__wrapper .cart-block__items"
+    ).scrollHeight;
 
-        let countOfCart = calcCartLength()
+    let countOfCart = calcCartLength();
 
-        countOfOrds.textContent = countOfCart.toString()
+    countOfOrds.textContent = countOfCart.toString();
 
-        if (countOfCart < 1) {
-            countOfOrds.classList.add('closed')
-        } else {
-            countOfOrds.classList.remove('closed')
-        }
+    if (countOfCart < 1) {
+      countOfOrds.classList.add("closed");
+    } else {
+      countOfOrds.classList.remove("closed");
+    }
 
-        if (cartInfo.items.length) {
-            countOfOrds.classList.remove('closed')
-        } else {
-            countOfOrds.classList.add('closed')
-        }
+    if (cartInfo.items.length) {
+      countOfOrds.classList.remove("closed");
+    } else {
+      countOfOrds.classList.add("closed");
+    }
 
-        cartInfo.cost += item.cost * item.amount
-        cartInfo.weight += item.weight * item.amount
+    cartInfo.cost += item.cost * item.amount;
+    cartInfo.weight += item.weight * item.amount;
 
-        allWeight.textContent = cartInfo.weight
-        allPrice.textContent = cartInfo.cost
+    allWeight.textContent = cartInfo.weight;
+    allPrice.textContent = cartInfo.cost;
 
-        checkCostWeight()
-    })
+    checkCostWeight();
+  });
 
-    checkCartForAmount()
+  checkCartForAmount();
 }

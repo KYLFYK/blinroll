@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta charset="utf-8">
+    <link rel="icon" sizes="256x256" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&amp;family=Montserrat:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/lk-layout.css">
+    <title>Blin Roll - Личный кабинет</title>
+  </head>
+  <body>
+    <header class="header__wrapper">
+      <div class="container">
+        <div class="header-block"><a class="header-logo" href="index.html"></a>
+          <div class="header-menu">
+            <ul class="header-menu__nav">
+              <li class="header-menu__nav-item"><a href="/#menu" data-dist="menu">Меню</a></li>
+              <li class="header-menu__nav-item"><a href="/#sale" data-dist="sale">Акции</a></li>
+              <li class="header-menu__nav-item"><a href="/#dist" data-dist="dist">Доставка</a></li>
+              <li class="header-menu__nav-item"><a href="#footer">Контакты</a></li>
+            </ul><a class="header-menu-tel" href="tel:+79786633030">
+              <div class="ico"></div><span>+7 (978) 663-30-30</span></a>
+            <div class="header-menu__lk"><a class="log-in" href="log-in.html">Войти</a><span class="sep">|</span><a class="reg" href="registration.html">Регистрация</a></div>
+          </div>
+          <div class="header-burger">
+            <div class="span-block"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mobile__header closed">
+        <div class="container">
+          <div class="mobile__header-block">
+            <div class="mobile__header-nav">
+              <ul class="mobile__header-menu">
+                <li class="mobile__header-menu-item"><a href="/#menu" data-dist="menu">Меню</a></li>
+                <li class="mobile__header-menu-item"><a href="/#sale" data-dist="sale">Акции</a></li>
+                <li class="mobile__header-menu-item"><a href="/#dist" data-dist="dist">Доставка</a></li>
+                <li class="mobile__header-menu-item"><a href="#footer">Контакты</a></li>
+              </ul>
+              <div class="mobile__header-log-in"><a class="mobile__header-log-in-item" href="log-in.html">Войти</a><span class="sep">|</span><a class="mobile__header-log-in-item" href="registration.html">Регистрация</a></div>
+            </div>
+            <div class="mobile__header-num"><a class="mobile__header-num-link" href="tel:+79786633030">
+                <div class="ico"></div><span>+7 (978) 663-30-30</span></a></div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="cart__wrapper">
+      <div class="cart__added-to-ct">
+        <div class="cart__added-to-ct-cont"><span>Товар добавлен в корзину</span>
+          <div class="ico"></div>
+        </div>
+      </div>
+      <div class="cart-block closed">
+        <div class="cart-block-close"></div>
+        <div class="cart-block__items"></div>
+        <div class="cart-block__empty">Ваша корзина пуста</div>
+        <div class="cart-block__items-cost">
+          <div class="weight"><span class="value">0</span><span class="gr"> г.</span></div>
+          <div class="price"><span class="value">0</span><span class="rub"> ₽</span></div>
+        </div>
+        <div class="cart-block__items-btns"><a class="cart-accept" href="#">Перейти к оформлению заказа</a><a class="cart-continue" href="/">Продолжить покупки</a><a class="cart-clean closed" href="#">Очистить корзину</a></div>
+      </div>
+      <div class="cart__open">
+        <div class="ico"></div>
+        <div class="count-of-ord closed">0</div>
+      </div>
+    </div>
+    <main>
+      <div class="lk__wrapper">
+        <div class="container">
+          <ul class="lk__nav">
+            <li class="lk__nav-item active"><a href="lk-main.pug">Аккаунт</a></li>
+            <li class="lk__nav-item"><a href="lk-orders.pug">Мои заказы</a></li>
+            <li class="lk__nav-item"><a href="lk-history.pug">История заказов</a></li>
+          </ul>
+          <h1 class="lk-title">Данные о вашем аккаунте</h1>
+          <form>
+            <div class="lk__fileds">
+              <div class="lk__fileds-item">
+                <div class="filed-title">Номер телефона</div>
+                <div class="filed">
+                  <input type="tel" name="tel" id="tel" readonly="readonly" value="+7 (123) 456 78-90">
+                  <div class="ico tel"></div>
+                  <div class="ico-e edit"></div>
+                </div>
+              </div>
+              <div class="lk__fileds-item">
+                <div class="filed-title">Номер телефона</div>
+                <div class="filed">
+                  <input type="email" name="email" id="email" readonly="readonly" value="your@mail.ru">
+                  <div class="ico mail"></div>
+                  <div class="ico-e edit"></div>
+                </div>
+              </div>
+            </div>
+            <div class="change-password"><span id="changePassword">Сменить пароль</span>
+              <div class="change-password__window">
+                <div class="change-password__block">
+                  <div class="close"></div>
+                  <div class="change-password-title">Смена пароля</div>
+                  <form>
+                    <div class="change-password-fileds">
+                      <div class="change-password-fileds-item">
+                        <div class="filed-title">Новый пароль</div>
+                        <div class="filed">
+                          <input type="password" name="password" id="newPassword" required="required">
+                          <div class="ico eye-closed"></div>
+                        </div>
+                      </div>
+                      <div class="change-password-fileds-item">
+                        <div class="filed-title">Повторите новый пароль</div>
+                        <div class="filed">
+                          <input type="password" name="password-repeat" id="newPasswordRepeat" required="required">
+                          <div class="ico eye-opened"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <input class="button green button-lg" type="submit" value="Сохранить">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <section class="sale__wrapper" id="sale">
+        <div class="sale-block">
+          <h2 class="title">Акции</h2>
+          <div class="sale-slider">
+            <div class="sale-slider-elem">
+              <div class="info"></div>
+              <div class="img"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer__wrapper" id="footer">
+      <div class="container">
+        <div class="footer-block"><a class="footer-logo" href="/">
+            <div class="logo"></div></a>
+          <div class="footer-content">
+            <ul class="footer-menu">
+              <li class="footer-menu-item"><a href="/#menu">Меню</a></li>
+              <li class="footer-menu-item"><a href="/#sale">Акции</a></li>
+              <li class="footer-menu-item"><a href="/#dist">Доставка</a></li>
+            </ul>
+            <ul class="footer-social">
+              <li class="footer-social-item"><a href="https://www.instagram.com/p/CMmfCLCLiJr/?igshid=f48s0whmtm53">
+                  <div class="ico instagram"></div></a></li>
+              <li class="footer-social-item"><a href="https://vk.com/blin_roll">
+                  <div class="ico vk"></div></a></li>
+            </ul>
+            <div class="footer-number"><a href="tel:+79786633030">
+                <div class="ico"></div><span>+7 (978) 663-30-30</span></a></div>
+            <div class="footer-log-in"><a class="log-in" href="log-in.html">Войти</a><span class="sep">|</span><a class="reg" href="registration.html">Регистрация</a></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="js/parse.js"></script>
+  </body>
+</html>
