@@ -778,3 +778,108 @@ if (JSON.parse(getCookie("cartBlock"))) {
 
   checkCartForAmount();
 }
+
+const loadUserInfo = async function (phoneNumber) {
+  let url =
+    `https://br-yalta.ru/order/getClientInfo?token=123523&phone=${phoneNumber}`;
+
+  let response = await fetch(url);
+
+  if (response.ok) {
+    let userInfo = await response.json();
+    
+    if (userInfo) {
+      let userName = userInfo.client.name
+      let userPhoneNumer = userInfo.client.phone
+      let addressList =  userInfo.addresses
+  
+      document.querySelector('.cart__user-info .input.name').value = userName
+  
+      document.querySelectorAll('select.canHide.adress option').forEach(opt => opt.remove())
+      
+      if (addressList.length) {
+        addressList.forEach(adress => {
+          let field = `<option>${adress.country}, ${adress.city}, ${adress.district}. ${adress.street}, ${adress.house}, кв. ${adress.flat}</option>`
+  
+          document.querySelector('select.canHide.adress').insertAdjacentHTML('beforeend', field)
+        })
+      }
+  
+      return userInfo.client
+    } else {
+      document.querySelector('select.canHide.adress').classList.add('hidden')
+      
+      return false
+    }
+    
+  } else {
+    alert('Ошибка сервера')
+  }
+};
+
+const sendOrder = async function (name, phone, delivery) {
+  let arr = []
+  
+  cartInfo.items.forEach((elem) => {
+    
+    if (elem.amount > 1) {
+      for (let i = 0; i < elem.amount; i++) {
+        arr.push(elem.id)
+      }
+    }
+  })
+  
+  const orders = JSON.stringify(arr);
+  const client = JSON.stringify({"phone": phone, "name": name, "birthday":"2000-11-03"})
+  const deliver = JSON.stringify({"delivery_type":"Самовывоз"})
+  
+  const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery-to=${deliver}`
+  
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  // xhr.setRequestHeader("Content-Type", "text/html")
+  xhr.send()
+  
+  if (xhr.status !== 200) {
+    // обработать ошибку
+    alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+  } else {
+    // вывести результат
+    alert( xhr.responseText ); // responseText -- текст ответа.
+  }
+};
+
+document
+  .querySelector(".cart-block__items-btns .cart-accept")
+  .addEventListener("click", () => {
+    if (cartInfo.items.length) {
+      document.querySelector('.cart__user-info').classList.remove('closed')
+    }
+  });
+
+document.querySelector('.cart__user-info .checkNumber').addEventListener('click', (e) => {
+  e.preventDefault()
+  let phoneNumber = document.querySelector('.cart__user-info .phonenumber').value.replace('+', '')
+  
+  loadUserInfo(phoneNumber)
+  document.querySelectorAll('.cart__user-info .canHide').forEach(item => item.classList.remove('hidden'))
+})
+
+document.querySelector('button.canHide.sendOrder').addEventListener('click', (e) => {
+  e.preventDefault()
+  
+  const number = document.querySelector('.cart__user-info .input.phonenumber').value
+  const name = document.querySelector('.cart__user-info .input.name').value
+  const selectedCity = document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex] ? document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex].text : null
+  const enteredAdress = document.querySelector('.cart__user-info .input.canHide.altAdress').value
+  
+  if (number && selectedCity || number && enteredAdress) {
+    sendOrder(name, number, enteredAdress || selectedCity).then(r => {
+    
+    })
+  } else {
+    alert('Не все поля заполнены')
+  }
+  
+  document.querySelector('.cart__user-info').classList.add('closed')
+})

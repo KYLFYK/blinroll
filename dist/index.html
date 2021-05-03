@@ -71,6 +71,27 @@
       </div>
     </div>
     <main>
+      <div class="cart__user-info closed">
+        <form>
+          <h3>Оформление заказа</h3>
+          <input class="input phonenumber" type="tel" placeholder="+79193933506" value="79193933506">
+          <button class="checkNumber">Далее</button>
+          <h5 class="hidden canHide">Информация</h5>
+          <input class="hidden canHide input name" type="text" placeholder="Ваше имя">
+          <input class="hidden canHide input date" type="date" placeholder="Дата рождения">
+          <h5 class="hidden canHide">Доставка</h5>
+          <select class="hidden canHide adress">
+            <option>Вариант 1</option>
+            <option>Вариант 2</option>
+            <option>Вариант 3</option>
+          </select>
+          <input class="input hidden canHide altAdress" type="text" placeholder="Введите адрес">
+          <!--label.hidden.canHide-->
+          <!--	input(type='checkbox').withoutDeliver-->
+          <!--	span.text Сомовывоз-->
+          <button class="hidden canHide sendOrder">Оформить заказ</button>
+        </form>
+      </div>
       <section class="main__wrapper">
         <div class="container">
           <div class="main__offer-block">

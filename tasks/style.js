@@ -1,16 +1,19 @@
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const terser = require("gulp-terser");
 
-module.exports = async function script(cb) {
-  gulp
-    .src("src/static/js/*.js")
+const gulpSass = require("gulp-sass");
+const autoprefix = require("gulp-autoprefixer");
+const plumber = require("gulp-plumber");
+
+module.exports = async function styles() {
+  return gulp
+    .src("src/static/scss/*.scss")
+    .pipe(plumber())
+    .pipe(gulpSass({outputStyle: 'compressed'}))
     .pipe(
-      babel({
-        presets: ["@babel/env"],
+      autoprefix({
+        overrideBrowserslist: ["last 4 versions"],
+        cascade: false,
       })
     )
-    .pipe(terser())
-    .pipe(gulp.dest("dist/js"));
-  return cb();
+    .pipe(gulp.dest("dist/css"));
 };
