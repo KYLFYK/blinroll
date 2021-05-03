@@ -830,22 +830,19 @@ const sendOrder = async function (name, phone, delivery) {
   })
   
   const orders = JSON.stringify(arr);
-  const client = JSON.stringify({"phone": phone, "name": name, "birthday":"2000-11-03"})
-  const deliver = JSON.stringify({"delivery_type":"Самовывоз"})
+  const client = JSON.stringify({"phone": phone, "name": name, "birthday": "2000-11-03"})
+  const deliver = JSON.stringify({"delivery_type":"Самовывоз", "comment": ""})
   
-  const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery-to=${deliver}`
+  const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery=${deliver}`
   
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
-  // xhr.setRequestHeader("Content-Type", "text/html")
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
   xhr.send()
   
   if (xhr.status !== 200) {
     // обработать ошибку
     alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
-  } else {
-    // вывести результат
-    alert( xhr.responseText ); // responseText -- текст ответа.
   }
 };
 
