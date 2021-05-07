@@ -71,27 +71,58 @@
       </div>
     </div>
     <main>
-      <div class="cart__user-info closed">
-        <form>
-          <h3>Оформление заказа</h3>
-          <input class="input phonenumber" type="tel" placeholder="+79193933506" value="79193933506">
-          <button class="checkNumber">Далее</button>
-          <h5 class="hidden canHide">Информация</h5>
-          <input class="hidden canHide input name hideIfValid" type="text" placeholder="Ваше имя">
-          <input class="hidden canHide input date hideIfValid" type="date" placeholder="Дата рождения">
-          <h5 class="hidden canHide">Доставка</h5>
-          <select class="hidden canHide adress hideIfSelf">
-            <option>Введите ниже</option>
-          </select>
-          <input class="input hidden canHide district hideIfSelf" type="text" placeholder="Район">
-          <input class="input hidden canHide street hideIfSelf" type="text" placeholder="Улица">
-          <input class="input hidden canHide house hideIfSelf" type="text" placeholder="Дом">
-          <input class="input hidden canHide flat hideIfSelf" type="text" placeholder="Квартира">
-          <input class="input hidden canHide ccomment hideIfSelf" type="text" placeholder="Комментарий для курьера">
-          <label class="hidden canHide changeDest">
-            <input class="withoutDeliver" type="checkbox"><span class="text">Сомовывоз</span>
-          </label>
-          <button class="hidden canHide sendOrder">Оформить заказ</button>
+      <div class="order-result-sending__wrapper closed">
+        <div class="order-result-sending__inner">
+          <h3 class="text">Ваш заказ принят!</h3>
+          <p>Ожидайте звонка оператора</p>
+        </div>
+      </div>
+      <div class="cart__accept closed">
+        <form class="cart__accept-block">
+          <h3 class="cart__accept-title">Оформление заказа</h3>
+          <div class="cart__accept-field" data-form-type="phone" id="numberField">
+            <input type="tel" placeholder="Ваш номер телефона" name="phoneNumber" required>
+          </div>
+          <div class="cart__accept-number-btns"><a class="button button-sm red" href="#" id="closeAccept">Завершить позже</a><a class="button button-sm green" href="#" id="checkNumber">Далее</a></div>
+          <div class="cart__accept-field hidden-default" data-form-type="name">
+            <input type="text" placeholder="Ваше имя" required name="userName" id="userName">
+          </div>
+          <div class="cart__accept-field hidden-default hideIfFinded" data-form-type="birthday">
+            <input type="text" placeholder="Дата рождения" required name="birthdayDate">
+          </div>
+          <div class="cart__accept-field-title hidden-default">Способ доставки</div>
+          <div class="cart__accept-field-delivery-type hidden-default">
+            <div class="cart__accept-field-delivery-type-item self">Самовывоз</div>
+            <div class="cart__accept-field-delivery-type-item delivery active">Доставка курьером</div>
+          </div>
+          <div class="cart__accept-field-title hidden-default selfHide">Адрес доставки</div>
+          <div class="cart__accept-field wth-popup hidden-my selfHide" data-form-type="delivery-to" id="myAdress">
+            <input type="text" placeholder="Мои адреса доставки" required readonly name="adress">
+            <div class="ico"></div>
+            <div class="popup__list closed">
+              <div class="popup__list-item">Выбор 1</div>
+              <div class="popup__list-item">Выбор 2</div>
+              <div class="popup__list-item">Выбор 3</div>
+            </div>
+          </div><a class="button button-sm green new-adres hidden-default selfHide" href="#" id="newAdress">Ввести новый адрес</a>
+          <div class="cart__accept-fields hidden-sec selfHide">
+            <div class="cart__accept-field" data-form-type="district">
+              <input type="text" placeholder="Район" name="district" required>
+            </div>
+            <div class="cart__accept-field" data-form-type="street">
+              <input type="text" placeholder="Улица" name="street" required>
+            </div>
+            <div class="cart__accept-field" data-form-type="house">
+              <input type="text" placeholder="Номер дома" name="house" required>
+            </div>
+            <div class="cart__accept-field" data-form-type="flat">
+              <input type="text" placeholder="Номер квартиры" name="flat" required>
+            </div>
+          </div>
+          <div class="cart__accept-field selfHide hidden-default" data-form-type="comment" id="commentToDelivery">
+            <input type="text" placeholder="Комментарий для курьера">
+          </div>
+          <div class="result__btn"><a class="button button-sm green bold hidden-final" href="#">Оформить заказ</a></div>
         </form>
       </div>
       <section class="main__wrapper">

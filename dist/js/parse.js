@@ -722,8 +722,8 @@ function checkCartForAmount() {
   }
 }
 
-if (JSON.parse(getCookie("cartBlock"))) {
-  for (key in JSON.parse(getCookie("cartBlock"))) {
+if (getCookie("cartBlock")) {
+  for (let key in JSON.parse(getCookie("cartBlock"))) {
     cartInfo.items.push(JSON.parse(getCookie("cartBlock"))[key]);
   }
 
@@ -779,129 +779,482 @@ if (JSON.parse(getCookie("cartBlock"))) {
   checkCartForAmount();
 }
 
-const loadUserInfo = async function (phoneNumber) {
-  let url =
-    `https://br-yalta.ru/order/getClientInfo?token=123523&phone=${phoneNumber}`;
+// Оформление заказа
 
-  let response = await fetch(url);
+const acceptWrapper = document.querySelector(".cart__accept");
 
-  if (response.ok) {
-    let userInfo = await response.json();
-    
-    if (userInfo) {
-      let userName = userInfo.client.name
-      let userPhoneNumer = userInfo.client.phone
-      let addressList =  userInfo.addresses
-  
-      document.querySelector('.cart__user-info .input.name').value = userName
-  
-      document.querySelectorAll('select.canHide.adress option').forEach(opt => opt.remove())
-      
-      if (addressList.length) {
-        addressList.forEach(adress => {
-          let field = `<option>${adress.country}, ${adress.city}, ${adress.district}. ${adress.street}, ${adress.house}, кв. ${adress.flat}</option>`
-  
-          document.querySelector('select.canHide.adress').insertAdjacentHTML('beforeend', field)
-        })
-        document.querySelector('select.canHide.adress.hideIfSelf').classList.remove('hidden')
-      } else {
-        document.querySelector('select.canHide.adress.hideIfSelf').classList.add('hidden')
-      }
-    
-      document.querySelectorAll('.hideIfValid').forEach(item => item.classList.add('hidden'))
-  
-      return userInfo.client
-    } else {
-      document.querySelector('select.canHide.adress').classList.add('hidden')
-      
-      return false
-    }
-    
-  } else {
-    alert('Ошибка сервера')
+const closeAccepting = document.getElementById("closeAccept");
+const checkNumBtn = document.getElementById("checkNumber");
+const numberField = document.getElementById("numberField");
+const myAdresField = document.getElementById("myAdress");
+
+let old = 0;
+
+const inp = numberField.querySelector("input");
+
+inp.oninput = function () {
+  let curLen = inp.value.length;
+
+  if (curLen < old) {
+    old--;
+    return;
   }
+
+  if (curLen === 1) inp.value = "+" + inp.value + " (";
+
+  if (curLen === 7) inp.value = inp.value + ") ";
+
+  if (curLen === 12) inp.value = inp.value + "-";
+
+  if (curLen === 15) inp.value = inp.value + "-";
+
+  if (curLen > 18) inp.value = inp.value.substring(0, inp.value.length - 1);
+
+  old++;
 };
 
-if (document.querySelector('.changeDest')) {
-  document.querySelector('.changeDest input').addEventListener('change', () => {
-    document.querySelectorAll('.cart__user-info .hideIfSelf').forEach(item => {
-      item.classList.toggle('hidden')
-    })
-  })
+const newAddress = document.getElementById("newAdress");
+let userFinded = false;
+let isBySelf = false;
+let adresFinded = false;
+
+const closeWrapperAccept = () => {
+  acceptWrapper.classList.add("closed");
+};
+
+const reloadPage = () => {
+  location.reload()
 }
 
-const sendOrder = async function (name, phone, delivery, comment, isSelf, district, street, house, flat) {
-  let arr = []
-  
-  cartInfo.items.forEach((elem) => {
-    
-    if (elem.amount > 1) {
-      for (let i = 0; i < elem.amount; i++) {
-        arr.push(elem.id)
+const checkAllFields = () => {
+  let allFull = true;
+  let adrsFromSelect = false;
+
+  let cannotFind = [];
+
+  let dataOfOrder = {};
+
+  document.querySelectorAll(".cart__accept-field").forEach((fieldItem) => {
+    let thisName = fieldItem.dataset.formType;
+    let value = fieldItem.querySelector("input")
+      ? fieldItem.querySelector("input").value
+      : false;
+
+    if (thisName) {
+      switch (thisName) {
+        case "phone":
+          if (value) {
+            dataOfOrder.phoneNumber = value.replace("+", "");
+          } else {
+            allFull = false;
+            cannotFind.push("Номер телефона");
+          }
+          break;
+        case "name":
+          if (value) {
+            dataOfOrder.userName = value;
+          } else {
+            allFull = false;
+            cannotFind.push("Имя");
+          }
+          break;
+        case "birthday":
+          if (!userFinded) {
+            if (value) {
+              dataOfOrder.birthday = value;
+            } else {
+              allFull = false;
+              cannotFind.push("Дата рождения");
+            }
+          }
+          break;
+        case "delivery-to":
+          if (!isBySelf) {
+            if (value) {
+              dataOfOrder.deliveryTo = fieldItem.querySelector(
+                ".active"
+              ).dataset.deliveryId;
+              adrsFromSelect = true;
+            } else {
+              adrsFromSelect = false;
+            }
+          } else {
+            dataOfOrder.bySelf = true;
+          }
+          break;
+        case "district":
+          if (!isBySelf && !adrsFromSelect) {
+            if (value) {
+              dataOfOrder.district = value;
+            } else {
+              allFull = false;
+              cannotFind.push("Район");
+            }
+          }
+          break;
+        case "street":
+          if (!isBySelf && !adrsFromSelect) {
+            if (value) {
+              dataOfOrder.street = value;
+            } else {
+              allFull = false;
+              cannotFind.push("Улица");
+            }
+          }
+          break;
+        case "house":
+          if (!isBySelf && !adrsFromSelect) {
+            if (value) {
+              dataOfOrder.house = value;
+            } else {
+              allFull = false;
+              cannotFind.push("Номер дома");
+            }
+          }
+          break;
+        case "flat":
+          if (!isBySelf && !adrsFromSelect) {
+            if (value) {
+              dataOfOrder.flat = value;
+            } else {
+              allFull = false;
+              cannotFind.push("Номер кваритры");
+            }
+          }
+          break;
+        case "comment":
+          if (!isBySelf) {
+            dataOfOrder.comment = value;
+          }
+          break;
       }
     }
-  })
-  
-  const orders = JSON.stringify(arr);
-  const client = JSON.stringify({"phone": phone, "name": name, "birthday": "2000-11-03"})
-  let deliver
-  
-  if (isSelf) {
-    deliver = JSON.stringify({"delivery_type":"Самовывоз", "comment": comment})
+  });
+
+  return allFull
+    ? { isAll: allFull, dataOfOrder }
+    : { isAll: allFull, cannotFind };
+};
+
+const checkNumber = async function () {
+  let number = numberField
+    .querySelector("input")
+    .value.replace(" ", "")
+    .replace("+", "")
+    .replace(" ", "")
+    .replace("(", "")
+    .replace(")", "")
+    .replace("-", "")
+    .replace(" ", "")
+    .replace("-", "");
+
+  if (number.length) {
+    let url = `https://br-yalta.ru/order/getClientInfo?token=123523&phone=${number}`;
+
+    let response = await fetch(url);
+    document.querySelector(".hidden-final").classList.remove("hidden-final");
+
+    if (response.ok) {
+      document
+        .querySelector(".cart__accept-number-btns")
+        .classList.add("hidden");
+
+      let userInfo = await response.json();
+
+      if (userInfo) {
+        let userName = userInfo.client.name;
+        let addressList = userInfo.addresses;
+
+        userFinded = true;
+
+        const userNameField = document.getElementById("userName");
+
+        userNameField.value = userName;
+
+        numberField.querySelector("input").setAttribute("readonly", "readonly");
+
+        if (addressList.length) {
+          adresFinded = true;
+
+          myAdresField
+            .querySelectorAll(".popup__list .popup__list-item")
+            .forEach((item) => item.remove());
+
+          addressList.forEach((adress) => {
+            let field = `<div class="popup__list-item" data-delivery-id="${adress.id}">${adress.country}, ${adress.city}, ${adress.district}. ${adress.street}, ${adress.house}, кв. ${adress.flat}</div>`;
+
+            myAdresField
+              .querySelector(".popup__list")
+              .insertAdjacentHTML("beforeend", field);
+          });
+          myAdresField.classList.remove("hidden-my");
+        } else {
+          myAdresField.classList.add("hidden-my");
+        }
+
+        document
+          .querySelectorAll(".hideIfFinded")
+          .forEach((item) => item.classList.add("hidden"));
+
+        document
+          .querySelectorAll(".hidden-default")
+          .forEach((item) => item.classList.remove("hidden-default"));
+        return userInfo.client;
+      } else {
+        newAddress.classList.add("hidden");
+        document
+          .querySelector(".cart__accept-fields")
+          .classList.remove("hidden-sec");
+      }
+
+      document
+        .querySelectorAll(".hidden-default")
+        .forEach((item) => item.classList.remove("hidden-default"));
+    } else {
+      alert("Ошибка сервера. Повторите попытку позже");
+      userFinded = false;
+    }
   } else {
-    deliver = JSON.stringify({"delivery_type":"Доставка", "district":district, "street":street, house:house, "flat":flat, "comment":comment})
+    document.querySelector(".cart__accept-block").reportValidity();
   }
+};
+const sendOrder = async function (
+  userFinded,
+  name,
+  phone,
+  delivery,
+  comment,
+  isSelf,
+  district,
+  street,
+  house,
+  flat,
+  birthday
+) {
+  let arr = [];
+
+  cartInfo.items.forEach((elem) => {
+    if (elem.amount > 1) {
+      for (let i = 0; i < elem.amount; i++) {
+        arr.push(elem.id);
+      }
+    } else {
+      arr.push(elem.id);
+    }
+  });
+
+  console.log(arr);
+
+  if (arr.length) {
+    const orders = JSON.stringify(arr);
+
+    let phoneNumber = phone
+      .replace(" ", "")
+      .replace("+", "")
+      .replace(" ", "")
+      .replace("(", "")
+      .replace(")", "")
+      .replace("-", "")
+      .replace(" ", "")
+      .replace("-", "");
+
+    let client;
+
+    if (userFinded) {
+      client = JSON.stringify({ phone: phoneNumber });
+    } else {
+      client = JSON.stringify({
+        phone: phoneNumber,
+        name: name,
+        birthday: birthday,
+      });
+    }
+
+    let deliver;
+
+    if (isSelf) {
+      deliver = JSON.stringify({
+        delivery_type: "Самовывоз",
+        comment: comment ? comment : "",
+      });
+    } else if (delivery) {
+      deliver = JSON.stringify({
+        delivery_type: "Доставка",
+        address_id: delivery,
+        comment: comment ? comment : "",
+      });
+    } else {
+      deliver = JSON.stringify({
+        delivery_type: "Доставка",
+        district: district,
+        street: street,
+        house: house,
+        flat: flat,
+        comment: comment ? comment : "",
+      });
+    }
+
+    const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery=${deliver}`;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   
-  const url = `https://br-yalta.ru/order/create?token=1234&order=${orders}&client=${client}&delivery=${deliver}`
+    xhr.send()
   
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-  xhr.send()
-  
-  if (xhr.status !== 200) {
-    // обработать ошибку
-    alert( 'Ожидайте звонка оператора!' ); // пример вывода: 404: Not Found
+    closeWrapperAccept()
+    document.querySelector('.order-result-sending__wrapper').classList.remove('closed')
+    
+    setTimeout(() => {
+      deleteAllCart();
+      reloadPage()
+    }, 3000)
+  } else {
+    alert("Ваша корзина пуста");
   }
 };
 
 document
-  .querySelector(".cart-block__items-btns .cart-accept")
-  .addEventListener("click", () => {
-    if (cartInfo.items.length) {
-      document.querySelector('.cart__user-info').classList.remove('closed')
+  .querySelector(".cart__accept-field.wth-popup")
+  .addEventListener("click", (e) => {
+    let target = e.target;
+
+    if (
+      target.closest("input") &&
+      target.parentElement.querySelector(".popup__list")
+    ) {
+      target.parentElement
+        .querySelector(".popup__list")
+        .classList.toggle("closed");
+    }
+
+    if (target.closest(".popup__list-item")) {
+      let thisText = target.closest(".popup__list-item").textContent;
+
+      if (
+        target.closest(".popup__list").querySelector(".popup__list-item.active")
+      ) {
+        target
+          .closest(".popup__list")
+          .querySelector(".popup__list-item.active")
+          .classList.remove("active");
+      }
+      target.closest(".popup__list-item").classList.add("active");
+
+      target
+        .closest(".cart__accept-field")
+        .querySelector("input").value = thisText;
+      target.closest(".popup__list").classList.add("closed");
     }
   });
 
-document.querySelector('.cart__user-info .checkNumber').addEventListener('click', (e) => {
-  e.preventDefault()
-  let phoneNumber = document.querySelector('.cart__user-info .phonenumber').value.replace('+', '')
-  
-  loadUserInfo(phoneNumber)
-  document.querySelectorAll('.cart__user-info .canHide').forEach(item => item.classList.remove('hidden'))
-})
+document.addEventListener("click", (e) => {
+  let target = e.target;
 
-document.querySelector('button.canHide.sendOrder').addEventListener('click', (e) => {
-  e.preventDefault()
-  
-  const number = document.querySelector('.cart__user-info .input.phonenumber').value
-  const name = document.querySelector('.cart__user-info .input.name').value
-  const selectedCity = document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex] ? document.querySelector('.cart__user-info select.canHide.adress').options[document.querySelector('.cart__user-info select.canHide.adress').selectedIndex].text : null
-  const comment = document.querySelector('.ccomment.hideIfSelf').value
-  const isSelf = document.querySelector('label.canHide.changeDest input').checked
-  
-  const district = document.querySelector('.canHide.district.hideIfSelf')
-  const street = document.querySelector('.canHide.street.hideIfSelf')
-  const house = document.querySelector('.canHide.house.hideIfSelf')
-  const flat = document.querySelector('.canHide.flat.hideIfSelf')
-  
-  if (number && selectedCity && cartInfo.items.length || number && district && cartInfo.items.length || isSelf) {
-    sendOrder(name, number, district || selectedCity, comment, isSelf, district, street, house, flat).then(r => {
-    
-    })
-  } else {
-    alert('Не все поля заполнены')
+  let isActive = !document
+    .querySelector(".cart__accept-field.wth-popup .popup__list")
+    .classList.contains("closed");
+  let isOutside = !document
+    .querySelector(".cart__accept-field.wth-popup .popup__list")
+    .contains(target);
+  let isInput = document
+    .querySelector(".cart__accept-field.wth-popup")
+    .contains(target);
+
+  if (isActive && isOutside && !isInput) {
+    document
+      .querySelector(".cart__accept-field.wth-popup .popup__list")
+      .classList.add("closed");
   }
-  
-  document.querySelector('.cart__user-info').classList.add('closed')
-})
+});
+
+document
+  .querySelectorAll(".cart__accept-field-delivery-type-item")
+  .forEach((item) => {
+    item.addEventListener("click", () => {
+      if (
+        document.querySelector(".cart__accept-field-delivery-type-item.active")
+      ) {
+        document
+          .querySelector(".cart__accept-field-delivery-type-item.active")
+          .classList.remove("active");
+      }
+
+      item.classList.add("active");
+
+      if (item.classList.contains("self")) {
+        isBySelf = true;
+        document
+          .querySelectorAll(".selfHide")
+          .forEach((item) => item.classList.add("hidden"));
+        if (document.querySelector(".hidden-final")) {
+          document
+            .querySelector(".hidden-final")
+            .classList.remove("hidden-final");
+        }
+      } else {
+        isBySelf = false;
+
+        document
+          .querySelectorAll(".selfHide")
+          .forEach((item) => item.classList.remove("hidden"));
+
+        if (!adresFinded) {
+          document.getElementById("newAdress").classList.add("hidden-default");
+        }
+
+        if (document.querySelector(".hidden-final")) {
+          document
+            .querySelector(".hidden-final")
+            .classList.remove("hidden-final");
+        }
+      }
+    });
+  });
+
+newAddress.addEventListener("click", (e) => {
+  e.preventDefault();
+  newAddress.classList.add("hidden");
+  document.querySelector(".cart__accept-fields").classList.remove("hidden-sec");
+});
+
+closeAccepting.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeWrapperAccept();
+});
+
+checkNumBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  checkNumber().then((r) => {});
+});
+
+acceptButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  acceptWrapper.classList.remove("closed");
+});
+
+document
+  .querySelector(".cart__accept-block a.button.button-sm.green.bold")
+  .addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (checkAllFields().isAll) {
+      let data = checkAllFields().dataOfOrder;
+
+      sendOrder(
+        userFinded,
+        data.userName,
+        data.phoneNumber,
+        data.deliveryTo,
+        data.comment,
+        data.bySelf,
+        data.district,
+        data.street,
+        data.house,
+        data.flat,
+        data.birthday
+      );
+    } else {
+      document.querySelector(".cart__accept-block").reportValidity();
+    }
+  });

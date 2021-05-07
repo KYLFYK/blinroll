@@ -1,20 +1,38 @@
-.cart__user-info.closed
-	form
-		h3 Оформление заказа
-		input(type='tel', placeholder='+79193933506', value='79193933506').input.phonenumber
-		button.checkNumber Далее
-		h5.hidden.canHide Информация
-		input.hidden.canHide(type='text', placeholder='Ваше имя').input.name.hideIfValid
-		input.hidden.canHide(type='date', placeholder='Дата рождения').input.date.hideIfValid
-		h5.hidden.canHide Доставка
-		select.hidden.canHide.adress.hideIfSelf
-			option Введите ниже
-		input(type='text', placeholder='Район').input.hidden.canHide.district.hideIfSelf
-		input(type='text', placeholder='Улица').input.hidden.canHide.street.hideIfSelf
-		input(type='text', placeholder='Дом').input.hidden.canHide.house.hideIfSelf
-		input(type='text', placeholder='Квартира').input.hidden.canHide.flat.hideIfSelf
-		input(type='text', placeholder='Комментарий для курьера').input.hidden.canHide.ccomment.hideIfSelf
-		label.hidden.canHide.changeDest
-			input(type='checkbox').withoutDeliver
-			span.text Сомовывоз
-		button.hidden.canHide.sendOrder Оформить заказ
+.cart__accept.closed
+	form.cart__accept-block
+		h3.cart__accept-title Оформление заказа
+		.cart__accept-field(data-form-type='phone')#numberField
+			input(type='tel', placeholder='Ваш номер телефона', name='phoneNumber', required)
+		.cart__accept-number-btns
+			a.button.button-sm.red(href='#')#closeAccept Завершить позже
+			a.button.button-sm.green(href='#')#checkNumber Далее
+		.cart__accept-field(data-form-type='name').hidden-default
+			input(type='text', placeholder='Ваше имя', required, name='userName')#userName
+		.cart__accept-field(data-form-type='birthday').hidden-default.hideIfFinded
+			input(type='text', placeholder='Дата рождения', required, name='birthdayDate')
+		.cart__accept-field-title.hidden-default Способ доставки
+		.cart__accept-field-delivery-type.hidden-default
+			.cart__accept-field-delivery-type-item.self Самовывоз
+			.cart__accept-field-delivery-type-item.delivery.active Доставка курьером
+		.cart__accept-field-title.hidden-default.selfHide Адрес доставки
+		.cart__accept-field.wth-popup(data-form-type='delivery-to').hidden-my#myAdress.selfHide
+			input(type='text', placeholder='Мои адреса доставки', required, readonly, name='adress')
+			.ico
+			.popup__list.closed
+				.popup__list-item Выбор 1
+				.popup__list-item Выбор 2
+				.popup__list-item Выбор 3
+		a.button.button-sm.green.new-adres(href='#')#newAdress.hidden-default.selfHide Ввести новый адрес
+		.cart__accept-fields.hidden-sec.selfHide
+			.cart__accept-field(data-form-type='district')
+				input(type='text', placeholder='Район', name='district', required)
+			.cart__accept-field(data-form-type='street')
+				input(type='text', placeholder='Улица', name='street', required)
+			.cart__accept-field(data-form-type='house')
+				input(type='text', placeholder='Номер дома', name='house', required)
+			.cart__accept-field(data-form-type='flat')
+				input(type='text', placeholder='Номер квартиры', name='flat', required)
+		.cart__accept-field(data-form-type='comment').selfHide.hidden-default#commentToDelivery
+			input(type='text', placeholder='Комментарий для курьера')
+		.result__btn
+			a.button.button-sm.green.bold(href='#').hidden-final Оформить заказ
